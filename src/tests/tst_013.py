@@ -1,8 +1,5 @@
-# -*- coding: utf-8 -*-
 '''
-Created on 11 oct. 2019
-
-@author: Mervin
+ActionChains(self.driver)
 '''
 import unittest
 import time
@@ -52,7 +49,7 @@ class Test_013(unittest.TestCase):
                                                 "/html[1]/body[1]/header[1]/div[1]/div[2]/ul[1]/li[2]/nav[1]/section[2]/div[1]/div[1]/article[1]/h2[1]/a[1]")
         localizador3.click()
 
-        time.sleep(10)
+        time.sleep(5)
 
 
     def tearDown(self):

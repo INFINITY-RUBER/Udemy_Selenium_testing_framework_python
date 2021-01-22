@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 '''
-Created on 11 oct. 2019
-
-@author: Mervin
+Javascript – Selenium
+execute_script
 '''
 import unittest
 import time
@@ -36,10 +35,10 @@ class Test_014(unittest.TestCase):
         # Click
         time.sleep(5)
         localizador = self.driver.find_element(By.XPATH, "//a[@id='nav-hamburger-menu']")
-        self.driver.execute_script("arguments[0].click();", localizador)
+        self.driver.execute_script("arguments[0].click();", localizador) # escroll y hace click
 
         time.sleep(5)
-        localizador = self.driver.find_element(By.XPATH, "/html[1]/body[1]/div[1]/div[4]/div[1]/div[1]/div[1]/ul[1]/li[2]/a[1]")
+        localizador = self.driver.find_element(By.XPATH, "/html/body/div[1]/div[5]/div[1]/div/div[1]/ul/li[2]")
         self.driver.execute_script("arguments[0].click();", localizador)
 
         time.sleep(5)

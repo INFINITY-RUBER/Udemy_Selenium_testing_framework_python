@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 '''
-Created on 11 oct. 2019
-
-@author: Mervin
+Selenium keys
 '''
 import unittest
 import time
@@ -34,7 +32,7 @@ class Test_015(unittest.TestCase):
 
         self.driver.find_element(By.XPATH, "//input[@name='q']").send_keys("Curso de Selenium en Udemy")
         time.sleep(2)
-        self.driver.find_element(By.XPATH, "//input[@name='q']").send_keys(Keys.BACK_SPACE, Keys.BACK_SPACE)
+        self.driver.find_element(By.XPATH, "//input[@name='q']").send_keys(Keys.BACK_SPACE)
         time.sleep(2)
         self.driver.find_element(By.XPATH, "//input[@name='q']").send_keys(Keys.BACK_SPACE, Keys.BACK_SPACE)
         time.sleep(2)
