@@ -1,6 +1,7 @@
 from src.functions.Inicializar import Inicializar
 from selenium import webdriver
 from selenium.webdriver.ie.options import DesiredCapabilities
+from selenium.webdriver.chrome.options import Options as OpcionesChrome
 
 
 class Functions(Inicializar):
@@ -30,10 +31,11 @@ class Functions(Inicializar):
 
         if navegador == ("CHROME"):
             options = OpcionesChrome()
-            options.add_argument('start-maximized')
+            options.add_argument('start-maximized')# hace que las opciones este maximizado 
+            # self.driver = webdriver.Chrome(chrome_options=options, executable_path=Inicializar.basedir + "\\drivers\\chromedriver.exe") PARA WINDOWS
             self.driver = webdriver.Chrome(chrome_options=options,
-                                           executable_path=Inicializar.basedir + "\\drivers\\chromedriver.exe")
-            self.driver.implicitly_wait(10)
+                                           executable_path=Inicializar.basedir + "/drivers/chromedriver") #en linux
+            self.driver.implicitly_wait(10) 
             self.driver.get(URL)
             self.ventanas = {'Principal': self.driver.window_handles[0]}
             return self.driver

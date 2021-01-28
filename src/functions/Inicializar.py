@@ -14,7 +14,9 @@ class Inicializar():
     Environment = 'Test'
 
     # BROWSER DE PRUEBAS
+    # NAVEGADOR = u'IExplorer'
     NAVEGADOR = u'CHROME'
+
 
     # DIRECTORIO DE LA EVIDENCIA
     Path_Evidencias = basedir + u'/data/capturas'
