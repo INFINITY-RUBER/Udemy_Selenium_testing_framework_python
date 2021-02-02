@@ -1,16 +1,18 @@
 
 class Registro:
-    img_logo_xpath = "//a[@class='spotify-logo']"
+    img_logo_xpath = "//svg[contains(@role,'img')]"
 
-    lbl_titulo_xpath = "//h2[contains(@class,'center hdr-l')]"
+    lbl_titulo_xpath = "//h2[contains(text(),'Registrarte con tu correo electrónico')]"
 
-    txt_email_xpath = "//input[@name='signup_form[email]']"
+    txt_email_xpath = "//input[@id='email']"
 
-    txt_email_confirm_xpath = "//input[@name='signup_form[confirm_email]']"
+    txt_email_confirm_xpath = "//input[@id='confirm']"
 
-    txt_password_id = "register-password"
+    txt_password_id = "password"
 
-    txt_nombre_xpath = "//input[contains(@id,'register-displayname')]"
+    txt_nombre_xpath = "//input[@id='displayname']"
+
+    txt_nombre_id = "displayname"
 
 
     #NOMENCLATURAS

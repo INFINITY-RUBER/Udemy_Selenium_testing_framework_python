@@ -17,7 +17,7 @@ class test_001(Selenium, unittest.TestCase):
         pass
 
     def tearDown(self):
-        pass
+        Selenium.tearDown(self)
 
 
 if __name__ == '__main__':

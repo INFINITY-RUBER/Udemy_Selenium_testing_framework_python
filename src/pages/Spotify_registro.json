@@ -1,33 +1,36 @@
 {
-
   "Logo": {
     "GetFieldBy": "Xpath",
-    "ValueToFind": "//a[@class='spotify-logo']"
+    "ValueToFind": "//svg[contains(@role,'img')]"
   },
 
-    "Titulo": {
+  "Titulo": {
     "GetFieldBy": "Xpath",
-    "ValueToFind": "//h2[contains(@class,'center hdr-l')]"
+    "ValueToFind": "//h2[contains(text(),'Registrarte con tu correo electrónico')]"
   },
 
   "Email": {
     "GetFieldBy": "Xpath",
-    "ValueToFind": "//input[@name='signup_form[email]']"
+    "ValueToFind": "//input[@id='email']"
   },
 
   "Email Confirmacion": {
     "GetFieldBy": "Xpath",
-    "ValueToFind": "//input[@name='signup_form[confirm_email]']"
+    "ValueToFind": "//input[@id='confirm']"
+  },
+
+  "Nombre": {
+    "GetFieldBy": "Xpath",
+    "ValueToFind": "//input[@id='displayname']"
   },
 
   "Pass": {
     "GetFieldBy": "id",
-    "ValueToFind": "register-password"
+    "ValueToFind": "password"
   },
 
-  "Nombre":{
-    "GetField" : "Xpath",
-    "ValueToFind" : "//input[contains(@id,'register-displayname')]"
+  "Mes de nacimiento": {
+    "GetFieldBy": "Xpath",
+    "ValueToFind": "//select[@id='month']"
   }
-
 }

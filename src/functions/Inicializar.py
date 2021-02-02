@@ -8,14 +8,16 @@ class Inicializar():
 
     # JsonData
     Json = basedir + u"/pages"
-    print(basedir)
-    print(Json)
+    # print(basedir)
+    # print(Json)
     
-    Environment = 'Test'
+    Environment = 'Dev'
 
     # BROWSER DE PRUEBAS
     # NAVEGADOR = u'IExplorer'
     NAVEGADOR = u'CHROME'
+    # NAVEGADOR = u'FIREFOX'
+
 
 
     # DIRECTORIO DE LA EVIDENCIA
