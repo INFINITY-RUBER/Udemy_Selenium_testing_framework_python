@@ -38,7 +38,7 @@ class Functions(Inicializar):
             self.driver.maximize_window()
             self.driver.get(URL)
             self.ventanas = {'Principal':self.driver.window_handles[0]}
-            print(self.ventanas)
+            print("IExplorer: ",self.ventanas)
             return self.driver
 
         if navegador == ("CHROME"):
@@ -335,11 +335,11 @@ class Functions(Inicializar):
             self.driver.switch_to.window(self.ventanas[ventana])
             Functions.page_has_loaded(self)
             print ("volviendo a " + ventana + " : " + self.ventanas[ventana])
-        else:
-            self.nWindows = len(self.driver.window_handles) - 1
-            self.ventanas[ventana] = self.driver.window_handles[int(self.nWindows)]
-            self.driver.switch_to.window(self.ventanas[ventana])
-            self.driver.maximize_window()
+        else: # crea una nueva registro en el dicionario para la ventana
+            self.nWindows = len(self.driver.window_handles) - 1 # verificar cuantas ventanas estan abiertas
+            self.ventanas[ventana] = self.driver.window_handles[int(self.nWindows)] # guarda la ventana a la key
+            self.driver.switch_to.window(self.ventanas[ventana]) # swichea a la ventana
+            self.driver.maximize_window() # maximisa ventana
             print(self.ventanas)
             print ("Estas en " + ventana + " : " + self.ventanas[ventana])
             Functions.page_has_loaded(self)
