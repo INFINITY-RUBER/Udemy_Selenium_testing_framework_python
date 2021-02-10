@@ -33,7 +33,6 @@ class test_004(Selenium, unittest.TestCase):
 
         Selenium.get_select_elements(self, 'Mes de nacimiento').select_by_visible_text('Febrero')
 
-
         # get_select_elements
         time.sleep(2)
         

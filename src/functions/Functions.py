@@ -234,6 +234,13 @@ class Functions(Inicializar):
                 print("get_text: No se encontró el elemento: " + self.json_ValueToFind)
                 Functions.tearDown(self)
 
+    def select_by_text(self, entity, text):
+        Functions.get_select_elements(self, entity).select_by_visible_text(text)
+
+    def send_key_text(self, entity, text): # funcion par aenviar texto
+        Functions.get_elements(self, entity).clear()
+        Functions.get_elements(self, entity).send_keys(text)
+
     def esperar_elemento(self, locator, MyTextElement=None):
         Get_Entity = Functions.get_entity(self, locator)
 
@@ -314,3 +321,37 @@ class Functions(Inicializar):
             except TimeoutException:
                 print("No se encontró el elemento: " + self.json_ValueToFind)
                 Functions.tearDown(self)
+
+    def switch_to_iframe(self, Locator):
+        iframe = Functions.get_elements(self, Locator)
+        self.driver.switch_to.frame(iframe)
+        print (f"Se realizó el switch a {Locator}")
+
+    def switch_to_parentFrame(self):
+        self.driver.switch_to.parent_frame()
+
+    def switch_to_windows_name(self, ventana):
+        if ventana in self.ventanas:
+            self.driver.switch_to.window(self.ventanas[ventana])
+            Functions.page_has_loaded(self)
+            print ("volviendo a " + ventana + " : " + self.ventanas[ventana])
+        else:
+            self.nWindows = len(self.driver.window_handles) - 1
+            self.ventanas[ventana] = self.driver.window_handles[int(self.nWindows)]
+            self.driver.switch_to.window(self.ventanas[ventana])
+            self.driver.maximize_window()
+            print(self.ventanas)
+            print ("Estas en " + ventana + " : " + self.ventanas[ventana])
+            Functions.page_has_loaded(self)
+
+    def new_window(self, URL):
+        self.driver.execute_script(f'''window.open("{URL}","_blank");''')
+        Functions.page_has_loaded(self)
+
+    def page_has_loaded(self):
+        driver = self.driver
+        print("Checking if {} page is loaded.".format(self.driver.current_url))
+        page_state = driver.execute_script('return document.readyState;')
+        yield
+        WebDriverWait(driver, 30).until(lambda driver: page_state == 'complete')
+        assert page_state == 'complete', "No se completo la carga"
