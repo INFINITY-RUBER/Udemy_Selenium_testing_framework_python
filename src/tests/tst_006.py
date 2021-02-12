@@ -18,7 +18,7 @@ class test_005(Selenium, unittest.TestCase):
 
 
     def test_005(self):
-
+        
         Selenium.new_window(self, "https://www.mercadolibre.com.ar/ofertas#nav-header")
         time.sleep(2)
         

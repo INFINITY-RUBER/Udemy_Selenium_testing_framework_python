@@ -1,3 +1,6 @@
+''' Saltar entre frames
+'''
+
 import os
 import sys
 sys.path.append("/home/infinity/Documentos/Selenium_testing_framework_python")
