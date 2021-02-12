@@ -16,7 +16,6 @@ import pytest
 import json
 import time
 
-
 class Functions(Inicializar):
 #######################################################
     ######   -=_INICIALIZAR DRIVERS_=-   #######
@@ -235,13 +234,26 @@ class Functions(Inicializar):
             except TimeoutException:
                 print("get_text: No se encontró el elemento: " + self.json_ValueToFind)
                 Functions.tearDown(self)
+##########################################################################
+##############       -=_TEXTBOX & COMBO HANDLE _=-   #################
+##########################################################################
+
 
     def select_by_text(self, entity, text):
         Functions.get_select_elements(self, entity).select_by_visible_text(text)
 
-    def send_key_text(self, entity, text): # funcion par aenviar texto
+    def send_key_text(self, entity, text): # funcion para aenviar texto
         Functions.get_elements(self, entity).clear()
         Functions.get_elements(self, entity).send_keys(text)
+
+    def send_especific_keys(self, element, key): # funcion para enviar teclas especial
+        if key == 'Enter':
+            Functions.get_elements(self, element).send_keys(Keys.ENTER)
+        if key == 'Tab':
+            Functions.get_elements(self, element).send_keys(Keys.TAB)
+        if key == 'Space':
+            Functions.get_elements(self, element).send_keys(Keys.SPACE)
+        time.sleep(3)
 
     def esperar_elemento(self, locator, MyTextElement=None):
         Get_Entity = Functions.get_entity(self, locator)
@@ -445,3 +457,108 @@ class Functions(Inicializar):
                 totalWait = totalWait + 1
         finally:
             print ("Esperar: Carga Finalizada ... ")
+
+##############   -Ventana de alertas   #############################
+    def alert_windows(self, accept ="accept"): 
+        try:
+            wait = WebDriverWait(self.driver, 30)
+            wait.until(EC.alert_is_present(), print("Esperando alerta..."))
+
+            alert = self.driver.switch_to.alert
+
+            print (alert.text)
+
+            if accept.lower()== "accept":
+                alert.accept()
+                print ("Click in Accept")
+            else:
+                alert.dismiss()
+                print ("Click in Dismiss")
+
+        except NoAlertPresentException:
+            print('Alerta no presente')
+        except NoSuchWindowException:
+            print('Alerta no presente')
+        except TimeoutException:
+            print('Alerta no presente')
+
+
+    def check_element(self, locator):  # devuelve true o false
+        Get_Entity = Functions.get_entity(self, locator)
+
+        if Get_Entity is None:
+            print("No se encontro el valor en el Json definido")
+        else:
+            try:
+                if self.json_GetFieldBy.lower() == "id":
+                    wait = WebDriverWait(self.driver, 20)
+                    wait.until(EC.visibility_of_element_located((By.ID, self.json_ValueToFind)))
+                    print(u"check_element: Se visualizo el elemento " + locator)
+                    return True
+
+                if self.json_GetFieldBy.lower() == "name":
+                    wait = WebDriverWait(self.driver, 20)
+                    wait.until(EC.visibility_of_element_located((By.NAME, self.json_ValueToFind)))
+                    print(u"check_element: Se visualizo el elemento " + locator)
+                    return True
+
+                if self.json_GetFieldBy.lower() == "xpath":
+                    wait = WebDriverWait(self.driver, 20)
+                    wait.until(EC.visibility_of_element_located((By.XPATH, self.json_ValueToFind)))
+                    print(u"check_element: Se visualizo el elemento " + locator)
+                    return True
+
+                if self.json_GetFieldBy.lower() == "link":
+                    wait = WebDriverWait(self.driver, 20)
+                    wait.until(EC.visibility_of_element_located((By.LINK, self.json_ValueToFind)))
+                    print(u"check_element: Se visualizo el elemento " + locator)
+                    return True
+
+                if self.json_GetFieldBy.lower() == "css":
+                    wait = WebDriverWait(self.driver, 20)
+                    wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, self.json_ValueToFind)))
+                    print(u"check_element: Se visualizo el elemento " + locator)
+                    return True
+
+            except NoSuchElementException:
+                print("get_text: No se encontró el elemento: " + self.json_ValueToFind)
+                return False
+            except TimeoutException:
+                print("get_text: No se encontró el elemento: " + self.json_ValueToFind)
+                return False
+                
+
+    def assert_text(self, locator, TEXTO):
+
+        Get_Entity = Functions.get_entity(self, locator)
+
+        if Get_Entity is None:
+            print("No se encontro el valor en el Json definido")
+        else:
+            if self.json_GetFieldBy.lower() == "id":
+                wait = WebDriverWait(self.driver, 15)
+                wait.until(EC.presence_of_element_located((By.ID, self.json_ValueToFind)))
+                ObjText = self.driver.find_element_by_id(self.json_ValueToFind).text
+
+            if self.json_GetFieldBy.lower() == "name":
+                wait = WebDriverWait(self.driver, 15)
+                wait.until(EC.presence_of_element_located((By.NAME, self.json_ValueToFind)))
+                ObjText = self.driver.find_element_by_name(self.json_ValueToFind).text
+
+            if self.json_GetFieldBy.lower() == "xpath":
+                wait = WebDriverWait(self.driver, 15)
+                wait.until(EC.presence_of_element_located((By.XPATH, self.json_ValueToFind)))
+                ObjText = self.driver.find_element_by_xpath(self.json_ValueToFind).text
+
+            if self.json_GetFieldBy.lower() == "link":
+                wait = WebDriverWait(self.driver, 15)
+                wait.until(EC.presence_of_element_located((By.PARTIAL_LINK_TEXT, self.json_ValueToFind)))
+                ObjText = self.driver.find_element_by_partial_link_text(self.json_ValueToFind).text
+
+            if self.json_GetFieldBy.lower() == "css":
+                wait = WebDriverWait(self.driver, 15)
+                wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, self.json_ValueToFind)))
+                ObjText = self.driver.find_element_by_css_selector(self.json_ValueToFind).text
+
+        print("Verificar Texto: el valor mostrado en: " + locator + " es: " + ObjText + " el esperado es: " + TEXTO)
+        assert TEXTO == ObjText, "Los valores comparados no coinciden"

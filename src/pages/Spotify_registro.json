@@ -32,5 +32,10 @@
   "Mes de nacimiento": {
     "GetFieldBy": "Xpath",
     "ValueToFind": "//select[@id='month']"
+  },
+
+  "Email Error": {
+    "GetFieldBy": "Xpath",
+    "ValueToFind": "//span[contains(text(),'Este correo electrónico no es válido. Asegúrate de')]"
   }
 }
