@@ -28,6 +28,13 @@ class Inicializar():
 
     if Environment == 'Dev':
         URL = 'https://www.spotify.com/py/signup/'
+        User = 'mdiaz'
+        Pass = 'Mm121666'
+        DB_HOST = '127.0.0.1'
+        DB_PORT = '3306'
+        DB_DATABASE = 'djangochannels'
+        DB_USER = 'djruber'
+        DB_PASS = 'E********@'
 
 
     if Environment == 'Test':

@@ -9,6 +9,11 @@
     "ValueToFind": "//h2[contains(text(),'Registrarte con tu correo electrónico')]"
   },
 
+  "Already": {
+    "GetFieldBy": "Xpath",
+    "ValueToFind": "//body/div[@id='__next']/main[1]/div[2]/form[1]/div[9]/p[3]/span[1]"
+  },
+
   "Email": {
     "GetFieldBy": "Xpath",
     "ValueToFind": "//input[@id='email']"

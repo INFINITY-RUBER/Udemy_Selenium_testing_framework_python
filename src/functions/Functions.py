@@ -11,10 +11,18 @@ from selenium.webdriver.ie.options import DesiredCapabilities
 from selenium.webdriver.chrome.options import Options as OpcionesChrome
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.keys import Keys
-
 import pytest
 import json
 import time
+import datetime
+import re
+import os
+import openpyxl
+import pyodbc
+import pymysql
+Scenario = {}
+diaGlobal= time.strftime(Inicializar.DateFormat)  # formato aaaa/mm/dd
+horaGlobal = time.strftime(Inicializar.HourFormat)  # formato 24 houras
 
 class Functions(Inicializar):
 #######################################################
@@ -526,7 +534,7 @@ class Functions(Inicializar):
             except TimeoutException:
                 print("get_text: No se encontró el elemento: " + self.json_ValueToFind)
                 return False
-                
+
 
     def assert_text(self, locator, TEXTO):
 
@@ -562,3 +570,158 @@ class Functions(Inicializar):
 
         print("Verificar Texto: el valor mostrado en: " + locator + " es: " + ObjText + " el esperado es: " + TEXTO)
         assert TEXTO == ObjText, "Los valores comparados no coinciden"
+
+    ##########################################################################
+    #################   -=DATA DE ESCENARIO=-                ################
+    ##########################################################################
+
+    def create_variable_scenary(self, key, value):
+        Scenario[key] = value
+        print(Scenario)
+        print ("Se almaceno la key " + key + " : " + value)
+
+    def save_variable_scenary(self, element, variable):
+        Scenario[variable] = Functions.get_text(self, element)
+        print(Scenario)
+        print ("Se almaceno el valor " + variable + " : " + Scenario[variable])
+
+    def get_variable_scenary(self, variable):
+        self.variable = Scenario[variable]
+        print(f"get_variable_scenary: {self.variable}")
+        return self.variable
+
+    def compare_with_variable_scenary(self, element, variable):
+        variable_scenary = str(Scenario[variable])
+        element_text = str(Functions.get_text(self, element))
+        _exist = (variable_scenary in element_text)
+        print (_exist)
+        print (f'Comparando los valores... verificando que si {variable_scenary} esta presente en {element_text} : {_exist}')
+        assert _exist == True, f'{variable_scenary} != {element_text}'
+
+    def textDateEnvironmentReplace(self, text):
+        if text == 'today':
+            self.today = datetime.date.today()
+            text = self.today.strftime(Inicializar.DateFormat)
+
+        if text == 'yesterday':
+            self.today = datetime.date.today() - datetime.timedelta(days=1)
+            text = self.today.strftime(Inicializar.DateFormat)
+
+        if text == 'Last Month':
+            self.today = datetime.date.today() - datetime.timedelta(days=30)
+            text = self.today.strftime(Inicializar.DateFormat)
+
+        return text
+
+    # Excel
+    def leer_celda(self, celda):
+        wb = openpyxl.load_workbook(Inicializar.Excel)
+        sheet = wb["DataTest"]
+        valor = str(sheet[celda].value)
+        print(u"------------------------------------")
+        print(u"El libro de excel utilizado es de es: " + Inicializar.Excel)
+        print(u"El valor de la celda es: " + valor)
+        print(u"------------------------------------")
+        return valor
+
+    def escribir_celda(self, celda, valor):
+        wb = openpyxl.load_workbook(Inicializar.Excel)
+        hoja = wb["DataTest"]
+        hoja[celda] = valor
+        wb.save(Inicializar.Excel)
+        print(u"------------------------------------")
+        print(u"El libro de excel utilizado es de es: " + Inicializar.Excel)
+        print(u"Se escribio en la celda " + str(celda) + u" el valor: " + str(valor))
+        print(u"------------------------------------")
+
+
+########## ########## ##########  Database ########## ########## ##########
+
+    def pyodbc_conn(self, _host = Inicializar.DB_HOST, _port = Inicializar.DB_PORT, _dbname=Inicializar.DB_DATABASE, _user = Inicializar.DB_USER, _pass = Inicializar.DB_PASS):
+        #print(pyodbc.drivers())
+        try:
+            config = dict(
+                server=_host,
+                port=_port,
+                database=_dbname,
+                username=_user,
+                password=_pass)
+
+            conn_str = (
+                    'SERVER={server};'
+                    'PORT={port};' +
+                    'DATABASE={database};' +
+                    'UID={username};' +
+                    'PWD={password}')
+
+            conn = pyodbc.connect(
+                r'DRIVER={ODBC Driver 17 for SQL Server};' + 
+                conn_str.format(**config))
+                # r'DRIVER={PostgreSQL ANSI};' +
+                
+
+            self.cursor = conn.cursor()
+            print("Always Connected")
+            return self.cursor
+
+        except (pyodbc.OperationalError) as error:
+            self.cursor = None
+            pytest.skip("Error en connection strings: " + str(error))
+
+    def pymysql_conn(self, _host = Inicializar.DB_HOST, _dbname=Inicializar.DB_DATABASE, _user = Inicializar.DB_USER, _pass = Inicializar.DB_PASS):
+        #print(pyodbc.drivers())
+        try:
+            self.connection = pymysql.connect(
+                host=_host,
+                db=_dbname,
+                user=_user,
+                password=_pass)           
+     
+            self.cursor = self.connection.cursor()
+            print("Coneccion exitosa")
+            return self.cursor
+
+        except (pymysql.OperationalError) as error:
+            self.cursor = None
+            pytest.skip("Error en connection strings: " + str(error))
+
+
+    def pyodbc_query(self, _query):
+        # self.cursor = Functions.pyodbc_conn(self)
+        self.cursor = Functions.pymysql_conn(self)
+        
+        if self.cursor is not None:
+            try:
+                self.cursor.execute(_query)
+                self.Result = self.cursor.fetchall()
+                for row in self.Result:
+                    print(f'{row[:]}')
+                    # print(row)
+
+            except (pymysql.Error) as error:
+                print("Error en la consulta", error)
+
+            finally:
+                if (self.cursor):
+                    self.cursor.close()
+                    print("pyodbc Se cerró la conexion")
+
+    def crear_path(self):
+        dia = time.strftime("%d-%m-%Y")  # formato aaaa/mm/dd
+        GeneralPath = Inicializar.Path_Evidencias
+        DriverTest = Inicializar.NAVEGADOR
+        TestCase = self.__class__.__name__
+        horaAct = horaGlobal
+        x = re.search("Context", TestCase)
+        if (x):
+            path = f"{GeneralPath}/{dia}/{DriverTest}/{horaAct}/"
+        else:
+            path = f"{GeneralPath}/{dia}/{TestCase}/{DriverTest}/{horaAct}/"
+
+        if not os.path.exists(path):  # si no existe el directorio lo crea
+            os.makedirs(path)
+
+        return path
+
+
+   
