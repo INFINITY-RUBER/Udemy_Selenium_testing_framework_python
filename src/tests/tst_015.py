@@ -22,9 +22,9 @@ class test_015(Selenium, unittest.TestCase):
 
         Selenium.get_elements(self, "txt_busqueda").send_keys(date)
 
-        path = Selenium.crear_path(self)
+        Selenium.crear_path(self) # crea la carpeta de pantallazo
 
-        Selenium.esperar(self, 5)
+        Selenium.esperar(self, 5) 
 
 
     def tearDown(self):

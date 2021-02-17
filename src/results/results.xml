@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite errors="3" failures="0" hostname="infinity-Inspiron-N4010" name="pytest" skipped="0" tests="3" time="0.562" timestamp="2021-02-16T16:37:09.374927"><testcase classname="" file="tst_001.py" name="tst_001" time="0.000"><error message="collection failure">ImportError while importing test module &apos;/home/infinity/Documentos/Selenium_testing_framework_python/src/tests/tst_001.py&apos;.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tst_001.py:7: in &lt;module&gt;
+    from src.functions.Functions import Functions as Selenium
+../functions/Functions.py:21: in &lt;module&gt;
+    import pyodbc
+E   ModuleNotFoundError: No module named &apos;pyodbc&apos;</error></testcase><testcase classname="" file="tst_002.py" name="tst_002" time="0.000"><error message="collection failure">ImportError while importing test module &apos;/home/infinity/Documentos/Selenium_testing_framework_python/src/tests/tst_002.py&apos;.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tst_002.py:7: in &lt;module&gt;
+    from src.functions.Functions import Functions as Selenium
+../functions/Functions.py:21: in &lt;module&gt;
+    import pyodbc
+E   ModuleNotFoundError: No module named &apos;pyodbc&apos;</error></testcase><testcase classname="" file="tst_003.py" name="tst_003" time="0.000"><error message="collection failure">ImportError while importing test module &apos;/home/infinity/Documentos/Selenium_testing_framework_python/src/tests/tst_003.py&apos;.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+tst_003.py:7: in &lt;module&gt;
+    from src.functions.Functions import Functions as Selenium
+../functions/Functions.py:21: in &lt;module&gt;
+    import pyodbc
+E   ModuleNotFoundError: No module named &apos;pyodbc&apos;</error></testcase></testsuite></testsuites>

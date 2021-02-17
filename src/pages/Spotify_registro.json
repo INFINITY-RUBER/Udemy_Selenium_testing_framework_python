@@ -42,5 +42,15 @@
   "Email Error": {
     "GetFieldBy": "Xpath",
     "ValueToFind": "//span[contains(text(),'Este correo electrónico no es válido. Asegúrate de')]"
+  },
+
+  "Contenedor Captcha": {
+    "GetFieldBy": "Xpath",
+    "ValueToFind": "//select[@id='month']"
+  },
+
+  "Mensaje Email": {
+    "GetFieldBy": "Xpath",
+    "ValueToFind": "//body/div[@id='__next']/main[1]/div[2]/form[1]/div[1]/div[2]/span[1]"
   }
 }

@@ -308,7 +308,50 @@ class Functions(Inicializar):
             except NoSuchElementException:
                 print(u"Esperar_Elemento: No presente " + locator)
                 Functions.tearDown(self)
-        
+##########################################################
+###################- ASSERTION - ######################
+##########################################################
+    def validar_elemento(self, locator):
+        Get_Entity = Functions.get_entity(self, locator)
+
+        TIME_OUT = 10
+
+        if Get_Entity is None:
+            return print("No se encontro el valor en el Json definido")
+        else:
+            try:
+                if self.json_GetFieldBy.lower() == "id":
+                    wait = WebDriverWait(self.driver, TIME_OUT)
+                    wait.until(EC.visibility_of_element_located((By.ID, self.json_ValueToFind)))
+                    wait.until(EC.element_to_be_clickable((By.ID, self.json_ValueToFind)))
+                    print(u"Esperar_Elemento: Se visualizo el elemento " + locator)
+                    return True
+
+                if self.json_GetFieldBy.lower() == "name":
+                    wait = WebDriverWait(self.driver, TIME_OUT)
+                    wait.until(EC.visibility_of_element_located((By.NAME, self.json_ValueToFind)))
+                    wait.until(EC.element_to_be_clickable((By.NAME, self.json_ValueToFind)))
+                    print(u"Esperar_Elemento: Se visualizo el elemento " + locator)
+                    return True
+
+                if self.json_GetFieldBy.lower() == "xpath":
+                    wait = WebDriverWait(self.driver, TIME_OUT)                 
+                    wait.until(EC.visibility_of_element_located((By.XPATH, self.json_ValueToFind)))
+                    wait.until(EC.element_to_be_clickable((By.XPATH, self.json_ValueToFind)))
+                    print(u"Esperar_Elemento: Se visualizo el elemento " + locator)
+                    return True
+
+                if self.json_GetFieldBy.lower() == "link":
+                    wait = WebDriverWait(self.driver, TIME_OUT)
+                    wait.until(EC.visibility_of_element_located((By.PARTIAL_LINK_TEXT, self.json_ValueToFind)))
+                    wait.until(EC.element_to_be_clickable((By.PARTIAL_LINK_TEXT, self.json_ValueToFind)))
+                    print(u"Esperar_Elemento: Se visualizo el elemento " + locator)
+                    return True
+
+            except TimeoutException:
+                print(u"Assert_xpath: Elemento No presente " + locator)
+                return False
+
     
     def get_select_elements(self, entity):
         Get_Entity = Functions.get_entity(self, entity)
@@ -598,7 +641,7 @@ class Functions(Inicializar):
         print (f'Comparando los valores... verificando que si {variable_scenary} esta presente en {element_text} : {_exist}')
         assert _exist == True, f'{variable_scenary} != {element_text}'
 
-    def textDateEnvironmentReplace(self, text):
+    def textDateEnvironmentReplace(self, text): # funcion para restar dias
         if text == 'today':
             self.today = datetime.date.today()
             text = self.today.strftime(Inicializar.DateFormat)
@@ -706,22 +749,39 @@ class Functions(Inicializar):
                     self.cursor.close()
                     print("pyodbc Se cerró la conexion")
 
+##############   -=_CAPTURA DE PANTALLA_=-   #############################
+##########################################################################
+
+    def hora_Actual(self):
+        self.hora = time.strftime(Inicializar.HourFormat)  # formato 24 horas
+        return self.hora
+
     def crear_path(self):
         dia = time.strftime("%d-%m-%Y")  # formato aaaa/mm/dd
         GeneralPath = Inicializar.Path_Evidencias
         DriverTest = Inicializar.NAVEGADOR
-        TestCase = self.__class__.__name__
+        TestCase = self.__class__.__name__ # Saca el nombre a la clase
         horaAct = horaGlobal
         x = re.search("Context", TestCase)
         if (x):
             path = f"{GeneralPath}/{dia}/{DriverTest}/{horaAct}/"
         else:
             path = f"{GeneralPath}/{dia}/{TestCase}/{DriverTest}/{horaAct}/"
-
         if not os.path.exists(path):  # si no existe el directorio lo crea
             os.makedirs(path)
-
         return path
+
+    def capturar_pantalla(self):
+        PATH = self.crear_path()
+        TestCase = self.__class__.__name__
+        img = f'{PATH}/{TestCase}_(' + str(self.hora_Actual()) + ')' + '.png'
+        self.driver.get_screenshot_as_file(img)
+        print(img)
+        return img
+
+    def captura(self, Descripcion):
+        allure.attach(self.driver.get_screenshot_as_png(), 
+        Descripcion, attachment_type=allure.attachment_type.PNG)
 
 
    

@@ -1,0 +1,15 @@
+Descargar binarios para windows:
+
+https://bintray.com/qameta/maven/allure2/2.9.0
+
+https://bintray.com/qameta/maven/download_file?file_path=io%2Fqameta%2Fallure%2Fallure-commandline%2F2.9.0%2Fallure-commandline-2.9.0.zip
+
+#Referencia instalación en Variables de entorno
+
+D:\Programs\Allure;
+
+D:\Programs\Allure\bin;
+
+D:\Programs\Allure\bin\allure.bat;
+
+D:\Programs\Allure\lib;

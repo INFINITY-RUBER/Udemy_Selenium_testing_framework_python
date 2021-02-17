@@ -20,7 +20,7 @@ class Inicializar():
 
 
 
-    # DIRECTORIO DE LA EVIDENCIA
+    # DIRECTORIO DE LA CATURA PANTALLAS
     Path_Evidencias = basedir + u'/data/capturas'
 
     # HOJA DE DATOS EXCEL
