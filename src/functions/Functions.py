@@ -20,6 +20,7 @@ import os
 import openpyxl
 import pyodbc
 import pymysql
+import allure
 Scenario = {}
 diaGlobal= time.strftime(Inicializar.DateFormat)  # formato aaaa/mm/dd
 horaGlobal = time.strftime(Inicializar.HourFormat)  # formato 24 houras

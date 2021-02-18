@@ -1,0 +1,8 @@
+Directorio Base: /home/infinity/Documentos/Selenium_testing_framework_python/src
+--------------------
+CHROME
+--------------------
+get_json_file: /home/infinity/Documentos/Selenium_testing_framework_python/src/pages/Google.json
+Esperar: Inicia (5)
+Esperar: Carga Finalizada ... 
+Se cerrará  el DRIVER

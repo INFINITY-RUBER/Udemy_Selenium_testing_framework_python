@@ -34,7 +34,7 @@ class Inicializar():
         DB_PORT = '3306'
         DB_DATABASE = 'djangochannels'
         DB_USER = 'djruber'
-        DB_PASS = 'E********@'
+        DB_PASS = 'Ericsson2018@'
 
 
     if Environment == 'Test':
