@@ -1,3 +1,6 @@
+import os
+import sys
+sys.path.append("/home/infinity/Documentos/Selenium_testing_framework_python")
 from src.functions.Inicializar import Inicializar
 from selenium import webdriver
 from selenium.webdriver.ie.options import DesiredCapabilities
@@ -414,7 +417,7 @@ class Functions(Inicializar):
         self.driver.execute_script(f'''window.open("{URL}","_blank");''')
         Functions.page_has_loaded(self)
 
-    def page_has_loaded(self):
+    def page_has_loaded(self): # esperar que la pagina cargue
         driver = self.driver
         print("Checking if {} page is loaded.".format(self.driver.current_url))
         page_state = driver.execute_script('return document.readyState;')
