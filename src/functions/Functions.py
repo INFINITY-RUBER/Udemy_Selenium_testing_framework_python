@@ -1,35 +1,35 @@
+import allure
+import pymysql
+import pyodbc
+import openpyxl
+import re
+import datetime
+
+import time
+import json
+import pytest
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import Select
+from selenium.webdriver.ie.options import DesiredCapabilities
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.common.exceptions import NoSuchElementException, NoAlertPresentException, NoSuchWindowException, TimeoutException
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.chrome.options import Options as OpcionesChrome
+from selenium import webdriver
+from src.functions.Inicializar import Inicializar
 import os
 import sys
-sys.path.append("/home/infinity/Documentos/Selenium_testing_framework_python")
-from src.functions.Inicializar import Inicializar
-from selenium import webdriver
-from selenium.webdriver.ie.options import DesiredCapabilities
-from selenium.webdriver.chrome.options import Options as OpcionesChrome
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import NoSuchElementException, NoAlertPresentException, NoSuchWindowException, TimeoutException
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.ie.options import DesiredCapabilities
-from selenium.webdriver.chrome.options import Options as OpcionesChrome
-from selenium.webdriver.support.ui import Select
-from selenium.webdriver.common.keys import Keys
-import pytest
-import json
-import time
-import datetime
-import re
-import os
-import openpyxl
-import pyodbc
-import pymysql
-import allure
+# sys.path.append("/home/infinity/Documentos/Selenium_testing_framework_python")
+
 Scenario = {}
-diaGlobal= time.strftime(Inicializar.DateFormat)  # formato aaaa/mm/dd
+diaGlobal = time.strftime(Inicializar.DateFormat)  # formato aaaa/mm/dd
 horaGlobal = time.strftime(Inicializar.HourFormat)  # formato 24 houras
 
+
 class Functions(Inicializar):
-#######################################################
+    #######################################################
     ######   -=_INICIALIZAR DRIVERS_=-   #######
     def abrir_navegador(self, URL=Inicializar.URL, navegador=Inicializar.NAVEGADOR):
         print("Directorio Base: " + Inicializar.basedir)
@@ -39,37 +39,41 @@ class Functions(Inicializar):
         print("-"*20)
 
         if navegador == ("IExplorer"):
-            caps = DesiredCapabilities.INTERNETEXPLORER.copy() # config de interne exp
+            caps = DesiredCapabilities.INTERNETEXPLORER.copy()  # config de interne exp
             caps["platform"] = "WINDOWS"
             caps["browserName"] = "internet explorer"
             caps["ignoreZoomSetting"] = True
             caps["requireWindowFocus"] = True
             caps["nativeEvents"] = True
-            self.driver = webdriver.Ie(Inicializar.basedir + "\\drivers\\IEDriverServer.exe", caps)
+            self.driver = webdriver.Ie(
+                Inicializar.basedir + "\\drivers\\IEDriverServer.exe", caps)
             self.driver.implicitly_wait(10)
             self.driver.maximize_window()
             self.driver.get(URL)
-            self.ventanas = {'Principal':self.driver.window_handles[0]}
-            print("IExplorer: ",self.ventanas)
+            self.ventanas = {'Principal': self.driver.window_handles[0]}
+            print("IExplorer: ", self.ventanas)
             return self.driver
 
         if navegador == ("CHROME"):
             options = OpcionesChrome()
-            options.add_argument('start-maximized')# hace que las opciones este maximizado 
+            # hace que las opciones este maximizado
+            options.add_argument('start-maximized')
             # self.driver = webdriver.Chrome(chrome_options=options, executable_path=Inicializar.basedir + "\\drivers\\chromedriver.exe") PARA WINDOWS
-            self.driver = webdriver.Chrome(chrome_options=options,executable_path=Inicializar.basedir + "/drivers/chromedriver") #en linux
-            self.driver.implicitly_wait(10) 
+            self.driver = webdriver.Chrome(
+                chrome_options=options, executable_path=Inicializar.basedir + "/drivers/chromedriver")  # en linux
+            self.driver.implicitly_wait(10)
             self.driver.get(URL)
             self.ventanas = {'Principal': self.driver.window_handles[0]}
             return self.driver
 
         if navegador == ("FIREFOX"):
-            self.driver = webdriver.Firefox(executable_path=Inicializar.basedir + "/drivers/geckodriver") #en linux
+            self.driver = webdriver.Firefox(
+                executable_path=Inicializar.basedir + "/drivers/geckodriver")  # en linux
             # self.driver = webdriver.Firefox() windows
             self.driver.implicitly_wait(10)
             self.driver.maximize_window()
             self.driver.get(URL)
-            self.ventanas = {'Principal':self.driver.window_handles[0]}
+            self.ventanas = {'Principal': self.driver.window_handles[0]}
             return self.driver
 
     def tearDown(self):
@@ -100,7 +104,7 @@ class Functions(Inicializar):
             print(u"Esperar_Elemento: No presente " + XPATH)
             Functions.tearDown(self)
 
-#******* ID ******************************
+# ******* ID ******************************
     def id_element(self, ID):
         elements = self.driver.find_element_by_id(ID)
         print("Xpath_Elements: Se interactuo con el elemento " + ID)
@@ -121,7 +125,7 @@ class Functions(Inicializar):
             print(u"Esperar_Elemento: No presente " + ID)
             Functions.tearDown(self)
 
-#******* NAME ******************************
+# ******* NAME ******************************
     def name_element(self, name):
         elements = self.driver.find_element_by_id(name)
         print("Xpath_Elements: Se interactuo con el elemento " + name)
@@ -145,13 +149,13 @@ class Functions(Inicializar):
 ##########################################################################
 ##############       -=_JSON     HANDLE _=-              #################
 ##########################################################################
- 
+
     def get_json_file(self, file):
         json_path = Inicializar.Json + "/" + file + '.json'
         try:
             with open(json_path, "r") as read_file:
                 self.json_strings = json.loads(read_file.read())
-                print ("get_json_file: "+ json_path)
+                print("get_json_file: " + json_path)
         except FileNotFoundError:
             self.json_strings = False
             pytest.skip(u"get_json_file: No se encontro el Archivo " + file)
@@ -159,59 +163,24 @@ class Functions(Inicializar):
 
     def get_entity(self, entity):
         if self.json_strings is False:
-            print ("Define el DOM para esta prueba")
+            print("Define el DOM para esta prueba")
         else:
             try:
                 self.json_ValueToFind = self.json_strings[entity]["ValueToFind"]
                 self.json_GetFieldBy = self.json_strings[entity]["GetFieldBy"]
-                print (self.json_ValueToFind,"---;-- ",self.json_GetFieldBy)
+                print(self.json_ValueToFind, "---;-- ", self.json_GetFieldBy)
 
                 return True
 
             except KeyError:
-                pytest.skip(u"get_entity: No se encontro la key a la cual se hace referencia: " + entity)
-                #self.driver.close()
+                pytest.skip(
+                    u"get_entity: No se encontro la key a la cual se hace referencia: " + entity)
+                # self.driver.close()
                 Functions.tearDown(self)
                 return None
 
 ############## ############################## ##############################
-    def get_elements(self, entity, MyTextElement = None):
-            Get_Entity = Functions.get_entity(self, entity)
-
-            if Get_Entity is None:
-                print("No se encontro el valor en el Json definido")
-            else:
-                try:
-                    if self.json_GetFieldBy.lower() == "id":
-                        elements = self.driver.find_element_by_id(self.json_ValueToFind)
-
-                    if self.json_GetFieldBy.lower() == "name":
-                        elements = self.driver.find_element_by_name(self.json_ValueToFind)
-
-                    if self.json_GetFieldBy.lower() == "xpath":
-                        if MyTextElement is not None:
-                            self.json_ValueToFind = self.json_ValueToFind.format(MyTextElement)
-                            print (self.json_ValueToFind)
-                        elements = self.driver.find_element_by_xpath(self.json_ValueToFind)
-
-                    if self.json_GetFieldBy.lower() == "link":
-                        elements = self.driver.find_element_by_partial_link_text(self.json_ValueToFind)
-
-                    if self.json_GetFieldBy.lower() == "css":
-                        elements = self.driver.find_element_by_css_selector(self.json_ValueToFind)
-
-                    print("get_elements: " + self.json_ValueToFind)
-                    return elements
-
-                except NoSuchElementException:
-                    print("get_text: No se encontró el elemento: " + self.json_ValueToFind)
-                    Functions.tearDown(self)
-                    
-                except TimeoutException:
-                    print("get_text: No se encontró el elemento: " + self.json_ValueToFind)
-                    Functions.tearDown(self)
-
-    def get_text(self, entity, MyTextElement = None):
+    def get_elements(self, entity, MyTextElement=None):
         Get_Entity = Functions.get_entity(self, entity)
 
         if Get_Entity is None:
@@ -219,46 +188,99 @@ class Functions(Inicializar):
         else:
             try:
                 if self.json_GetFieldBy.lower() == "id":
-                    elements = self.driver.find_element_by_id(self.json_ValueToFind)
+                    elements = self.driver.find_element_by_id(
+                        self.json_ValueToFind)
 
                 if self.json_GetFieldBy.lower() == "name":
-                    elements = self.driver.find_element_by_name(self.json_ValueToFind)
+                    elements = self.driver.find_element_by_name(
+                        self.json_ValueToFind)
 
                 if self.json_GetFieldBy.lower() == "xpath":
                     if MyTextElement is not None:
-                        self.json_ValueToFind = self.json_ValueToFind.format(MyTextElement)
-                        print (self.json_ValueToFind)
-                    elements = self.driver.find_element_by_xpath(self.json_ValueToFind)
+                        self.json_ValueToFind = self.json_ValueToFind.format(
+                            MyTextElement)
+                        print(self.json_ValueToFind)
+                    elements = self.driver.find_element_by_xpath(
+                        self.json_ValueToFind)
 
                 if self.json_GetFieldBy.lower() == "link":
-                    elements = self.driver.find_element_by_partial_link_text(self.json_ValueToFind)
+                    elements = self.driver.find_element_by_partial_link_text(
+                        self.json_ValueToFind)
 
                 if self.json_GetFieldBy.lower() == "css":
-                    elements = self.driver.find_element_by_css_selector(self.json_ValueToFind)
+                    elements = self.driver.find_element_by_css_selector(
+                        self.json_ValueToFind)
+
+                print("get_elements: " + self.json_ValueToFind)
+                return elements
+
+            except NoSuchElementException:
+                print("get_text: No se encontró el elemento: " +
+                      self.json_ValueToFind)
+                Functions.tearDown(self)
+
+            except TimeoutException:
+                print("get_text: No se encontró el elemento: " +
+                      self.json_ValueToFind)
+                Functions.tearDown(self)
+
+    def get_text(self, entity, MyTextElement=None):
+        Get_Entity = Functions.get_entity(self, entity)
+
+        if Get_Entity is None:
+            print("No se encontro el valor en el Json definido")
+        else:
+            try:
+                if self.json_GetFieldBy.lower() == "id":
+                    elements = self.driver.find_element_by_id(
+                        self.json_ValueToFind)
+
+                if self.json_GetFieldBy.lower() == "name":
+                    elements = self.driver.find_element_by_name(
+                        self.json_ValueToFind)
+
+                if self.json_GetFieldBy.lower() == "xpath":
+                    if MyTextElement is not None:
+                        self.json_ValueToFind = self.json_ValueToFind.format(
+                            MyTextElement)
+                        print(self.json_ValueToFind)
+                    elements = self.driver.find_element_by_xpath(
+                        self.json_ValueToFind)
+
+                if self.json_GetFieldBy.lower() == "link":
+                    elements = self.driver.find_element_by_partial_link_text(
+                        self.json_ValueToFind)
+
+                if self.json_GetFieldBy.lower() == "css":
+                    elements = self.driver.find_element_by_css_selector(
+                        self.json_ValueToFind)
 
                 print("get_text: " + self.json_ValueToFind)
                 print("Text Value : " + elements.text)
                 return elements.text
 
             except NoSuchElementException:
-                print("get_text: No se encontró el elemento: " + self.json_ValueToFind)
+                print("get_text: No se encontró el elemento: " +
+                      self.json_ValueToFind)
                 Functions.tearDown(self)
             except TimeoutException:
-                print("get_text: No se encontró el elemento: " + self.json_ValueToFind)
+                print("get_text: No se encontró el elemento: " +
+                      self.json_ValueToFind)
                 Functions.tearDown(self)
 ##########################################################################
 ##############       -=_TEXTBOX & COMBO HANDLE _=-   #################
 ##########################################################################
 
-
     def select_by_text(self, entity, text):
-        Functions.get_select_elements(self, entity).select_by_visible_text(text)
+        Functions.get_select_elements(
+            self, entity).select_by_visible_text(text)
 
-    def send_key_text(self, entity, text): # funcion para aenviar texto
+    def send_key_text(self, entity, text):  # funcion para aenviar texto
         Functions.get_elements(self, entity).clear()
         Functions.get_elements(self, entity).send_keys(text)
 
-    def send_especific_keys(self, element, key): # funcion para enviar teclas especial
+    # funcion para enviar teclas especial
+    def send_especific_keys(self, element, key):
         if key == 'Enter':
             Functions.get_elements(self, element).send_keys(Keys.ENTER)
         if key == 'Tab':
@@ -276,33 +298,42 @@ class Functions(Inicializar):
             try:
                 if self.json_GetFieldBy.lower() == "id":
                     wait = WebDriverWait(self.driver, 20)
-                    wait.until(EC.visibility_of_element_located((By.ID, self.json_ValueToFind)))
-                    wait.until(EC.element_to_be_clickable((By.ID, self.json_ValueToFind)))
+                    wait.until(EC.visibility_of_element_located(
+                        (By.ID, self.json_ValueToFind)))
+                    wait.until(EC.element_to_be_clickable(
+                        (By.ID, self.json_ValueToFind)))
                     print(u"Esperar_Elemento: Se visualizo el elemento " + locator)
                     return True
 
                 if self.json_GetFieldBy.lower() == "name":
                     wait = WebDriverWait(self.driver, 20)
-                    wait.until(EC.visibility_of_element_located((By.NAME, self.json_ValueToFind)))
-                    wait.until(EC.element_to_be_clickable((By.NAME, self.json_ValueToFind)))
+                    wait.until(EC.visibility_of_element_located(
+                        (By.NAME, self.json_ValueToFind)))
+                    wait.until(EC.element_to_be_clickable(
+                        (By.NAME, self.json_ValueToFind)))
                     print(u"Esperar_Elemento: Se visualizo el elemento " + locator)
                     return True
 
                 if self.json_GetFieldBy.lower() == "xpath":
                     wait = WebDriverWait(self.driver, 20)
                     if MyTextElement is not None:
-                        self.json_ValueToFind = self.json_ValueToFind.format(MyTextElement)
+                        self.json_ValueToFind = self.json_ValueToFind.format(
+                            MyTextElement)
                         print(self.json_ValueToFind)
 
-                    wait.until(EC.visibility_of_element_located((By.XPATH, self.json_ValueToFind)))
-                    wait.until(EC.element_to_be_clickable((By.XPATH, self.json_ValueToFind)))
+                    wait.until(EC.visibility_of_element_located(
+                        (By.XPATH, self.json_ValueToFind)))
+                    wait.until(EC.element_to_be_clickable(
+                        (By.XPATH, self.json_ValueToFind)))
                     print(u"Esperar_Elemento: Se visualizo el elemento " + locator)
                     return True
 
                 if self.json_GetFieldBy.lower() == "link":
                     wait = WebDriverWait(self.driver, 20)
-                    wait.until(EC.visibility_of_element_located((By.PARTIAL_LINK_TEXT, self.json_ValueToFind)))
-                    wait.until(EC.element_to_be_clickable((By.PARTIAL_LINK_TEXT, self.json_ValueToFind)))
+                    wait.until(EC.visibility_of_element_located(
+                        (By.PARTIAL_LINK_TEXT, self.json_ValueToFind)))
+                    wait.until(EC.element_to_be_clickable(
+                        (By.PARTIAL_LINK_TEXT, self.json_ValueToFind)))
                     print(u"Esperar_Elemento: Se visualizo el elemento " + locator)
                     return True
 
@@ -315,6 +346,7 @@ class Functions(Inicializar):
 ##########################################################
 ###################- ASSERTION - ######################
 ##########################################################
+
     def validar_elemento(self, locator):
         Get_Entity = Functions.get_entity(self, locator)
 
@@ -326,29 +358,37 @@ class Functions(Inicializar):
             try:
                 if self.json_GetFieldBy.lower() == "id":
                     wait = WebDriverWait(self.driver, TIME_OUT)
-                    wait.until(EC.visibility_of_element_located((By.ID, self.json_ValueToFind)))
-                    wait.until(EC.element_to_be_clickable((By.ID, self.json_ValueToFind)))
+                    wait.until(EC.visibility_of_element_located(
+                        (By.ID, self.json_ValueToFind)))
+                    wait.until(EC.element_to_be_clickable(
+                        (By.ID, self.json_ValueToFind)))
                     print(u"Esperar_Elemento: Se visualizo el elemento " + locator)
                     return True
 
                 if self.json_GetFieldBy.lower() == "name":
                     wait = WebDriverWait(self.driver, TIME_OUT)
-                    wait.until(EC.visibility_of_element_located((By.NAME, self.json_ValueToFind)))
-                    wait.until(EC.element_to_be_clickable((By.NAME, self.json_ValueToFind)))
+                    wait.until(EC.visibility_of_element_located(
+                        (By.NAME, self.json_ValueToFind)))
+                    wait.until(EC.element_to_be_clickable(
+                        (By.NAME, self.json_ValueToFind)))
                     print(u"Esperar_Elemento: Se visualizo el elemento " + locator)
                     return True
 
                 if self.json_GetFieldBy.lower() == "xpath":
-                    wait = WebDriverWait(self.driver, TIME_OUT)                 
-                    wait.until(EC.visibility_of_element_located((By.XPATH, self.json_ValueToFind)))
-                    wait.until(EC.element_to_be_clickable((By.XPATH, self.json_ValueToFind)))
+                    wait = WebDriverWait(self.driver, TIME_OUT)
+                    wait.until(EC.visibility_of_element_located(
+                        (By.XPATH, self.json_ValueToFind)))
+                    wait.until(EC.element_to_be_clickable(
+                        (By.XPATH, self.json_ValueToFind)))
                     print(u"Esperar_Elemento: Se visualizo el elemento " + locator)
                     return True
 
                 if self.json_GetFieldBy.lower() == "link":
                     wait = WebDriverWait(self.driver, TIME_OUT)
-                    wait.until(EC.visibility_of_element_located((By.PARTIAL_LINK_TEXT, self.json_ValueToFind)))
-                    wait.until(EC.element_to_be_clickable((By.PARTIAL_LINK_TEXT, self.json_ValueToFind)))
+                    wait.until(EC.visibility_of_element_located(
+                        (By.PARTIAL_LINK_TEXT, self.json_ValueToFind)))
+                    wait.until(EC.element_to_be_clickable(
+                        (By.PARTIAL_LINK_TEXT, self.json_ValueToFind)))
                     print(u"Esperar_Elemento: Se visualizo el elemento " + locator)
                     return True
 
@@ -356,7 +396,6 @@ class Functions(Inicializar):
                 print(u"Assert_xpath: Elemento No presente " + locator)
                 return False
 
-    
     def get_select_elements(self, entity):
         Get_Entity = Functions.get_entity(self, entity)
 
@@ -365,16 +404,20 @@ class Functions(Inicializar):
         else:
             try:
                 if self.json_GetFieldBy.lower() == "id":
-                    select = Select(self.driver.find_element_by_id(self.json_ValueToFind))
+                    select = Select(self.driver.find_element_by_id(
+                        self.json_ValueToFind))
 
                 if self.json_GetFieldBy.lower() == "name":
-                    select = Select(self.driver.find_element_by_name(self.json_ValueToFind))
+                    select = Select(self.driver.find_element_by_name(
+                        self.json_ValueToFind))
 
                 if self.json_GetFieldBy.lower() == "xpath":
-                    select = Select(self.driver.find_element_by_xpath(self.json_ValueToFind))
+                    select = Select(self.driver.find_element_by_xpath(
+                        self.json_ValueToFind))
 
                 if self.json_GetFieldBy.lower() == "link":
-                    select = Select(self.driver.find_element_by_partial_link_text(self.json_ValueToFind))
+                    select = Select(self.driver.find_element_by_partial_link_text(
+                        self.json_ValueToFind))
 
                 print("get_select_elements: " + self.json_ValueToFind)
                 return select
@@ -394,7 +437,7 @@ class Functions(Inicializar):
     def switch_to_iframe(self, Locator):
         iframe = Functions.get_elements(self, Locator)
         self.driver.switch_to.frame(iframe)
-        print (f"Se realizó el switch a {Locator}")
+        print(f"Se realizó el switch a {Locator}")
 
     def switch_to_parentFrame(self):
         self.driver.switch_to.parent_frame()
@@ -403,28 +446,31 @@ class Functions(Inicializar):
         if ventana in self.ventanas:
             self.driver.switch_to.window(self.ventanas[ventana])
             Functions.page_has_loaded(self)
-            print ("volviendo a " + ventana + " : " + self.ventanas[ventana])
-        else: # crea una nueva registro en el dicionario para la ventana
-            self.nWindows = len(self.driver.window_handles) - 1 # verificar cuantas ventanas estan abiertas
-            self.ventanas[ventana] = self.driver.window_handles[int(self.nWindows)] # guarda la ventana a la key
-            self.driver.switch_to.window(self.ventanas[ventana]) # swichea a la ventana
-            self.driver.maximize_window() # maximisa ventana
+            print("volviendo a " + ventana + " : " + self.ventanas[ventana])
+        else:  # crea una nueva registro en el dicionario para la ventana
+            # verificar cuantas ventanas estan abiertas
+            self.nWindows = len(self.driver.window_handles) - 1
+            self.ventanas[ventana] = self.driver.window_handles[int(
+                self.nWindows)]  # guarda la ventana a la key
+            self.driver.switch_to.window(
+                self.ventanas[ventana])  # swichea a la ventana
+            self.driver.maximize_window()  # maximisa ventana
             print(self.ventanas)
-            print ("Estas en " + ventana + " : " + self.ventanas[ventana])
+            print("Estas en " + ventana + " : " + self.ventanas[ventana])
             Functions.page_has_loaded(self)
 
     def new_window(self, URL):
         self.driver.execute_script(f'''window.open("{URL}","_blank");''')
         Functions.page_has_loaded(self)
 
-    def page_has_loaded(self): # esperar que la pagina cargue
+    def page_has_loaded(self):  # esperar que la pagina cargue
         driver = self.driver
         print("Checking if {} page is loaded.".format(self.driver.current_url))
         page_state = driver.execute_script('return document.readyState;')
         yield
-        WebDriverWait(driver, 30).until(lambda driver: page_state == 'complete')
+        WebDriverWait(driver, 30).until(
+            lambda driver: page_state == 'complete')
         assert page_state == 'complete', "No se completo la carga"
-
 
     def scroll_to(self, locator):
         Get_Entity = Functions.get_entity(self, locator)
@@ -434,20 +480,26 @@ class Functions(Inicializar):
         else:
             try:
                 if self.json_GetFieldBy.lower() == "id":
-                    localizador = self.driver.find_element(By.ID, self.json_ValueToFind)
-                    self.driver.execute_script("arguments[0].scrollIntoView();", localizador)
+                    localizador = self.driver.find_element(
+                        By.ID, self.json_ValueToFind)
+                    self.driver.execute_script(
+                        "arguments[0].scrollIntoView();", localizador)
                     print(u"scroll_to: " + locator)
                     return True
 
                 if self.json_GetFieldBy.lower() == "xpath":
-                    localizador = self.driver.find_element(By.XPATH, self.json_ValueToFind)
-                    self.driver.execute_script("arguments[0].scrollIntoView();", localizador)
+                    localizador = self.driver.find_element(
+                        By.XPATH, self.json_ValueToFind)
+                    self.driver.execute_script(
+                        "arguments[0].scrollIntoView();", localizador)
                     print(u"scroll_to: " + locator)
                     return True
 
                 if self.json_GetFieldBy.lower() == "link":
-                    localizador = self.driver.find_element(By.PARTIAL_LINK_TEXT, self.json_ValueToFind)
-                    self.driver.execute_script("arguments[0].scrollIntoView();", localizador)
+                    localizador = self.driver.find_element(
+                        By.PARTIAL_LINK_TEXT, self.json_ValueToFind)
+                    self.driver.execute_script(
+                        "arguments[0].scrollIntoView();", localizador)
                     print(u"scroll_to: " + locator)
                     return True
 
@@ -463,36 +515,47 @@ class Functions(Inicializar):
         else:
             try:
                 if self.json_GetFieldBy.lower() == "id":
-                    localizador = self.driver.find_element(By.ID, self.json_ValueToFind)
-                    self.driver.execute_script("arguments[0].click();", localizador)
+                    localizador = self.driver.find_element(
+                        By.ID, self.json_ValueToFind)
+                    self.driver.execute_script(
+                        "arguments[0].click();", localizador)
                     print(u"Se hizo click en: " + locator)
                     return True
 
                 if self.json_GetFieldBy.lower() == "xpath":
                     if MyTextElement is not None:
-                        self.json_ValueToFind = self.json_ValueToFind.format(MyTextElement)
+                        self.json_ValueToFind = self.json_ValueToFind.format(
+                            MyTextElement)
                         print(self.json_ValueToFind)
 
-                    localizador = self.driver.find_element(By.XPATH, self.json_ValueToFind)
-                    self.driver.execute_script("arguments[0].click();", localizador)
+                    localizador = self.driver.find_element(
+                        By.XPATH, self.json_ValueToFind)
+                    self.driver.execute_script(
+                        "arguments[0].click();", localizador)
                     print(u"Se hizo click en: " + locator)
                     return True
 
                 if self.json_GetFieldBy.lower() == "link":
-                    localizador = self.driver.find_element(By.PARTIAL_LINK_TEXT, self.json_ValueToFind)
-                    self.driver.execute_script("arguments[0].click();", localizador)
+                    localizador = self.driver.find_element(
+                        By.PARTIAL_LINK_TEXT, self.json_ValueToFind)
+                    self.driver.execute_script(
+                        "arguments[0].click();", localizador)
                     print(u"Se hizo click en: " + locator)
                     return True
 
                 if self.json_GetFieldBy.lower() == "name":
-                    localizador = self.driver.find_element(By.NAME, self.json_ValueToFind)
-                    self.driver.execute_script("arguments[0].click();", localizador)
+                    localizador = self.driver.find_element(
+                        By.NAME, self.json_ValueToFind)
+                    self.driver.execute_script(
+                        "arguments[0].click();", localizador)
                     print(u"Se hizo click en: " + locator)
                     return True
 
                 if self.json_GetFieldBy.lower() == "css":
-                    localizador = self.driver.find_element(By.CSS_SELECTOR, self.json_ValueToFind)
-                    self.driver.execute_script("arguments[0].click();", localizador)
+                    localizador = self.driver.find_element(
+                        By.CSS_SELECTOR, self.json_ValueToFind)
+                    self.driver.execute_script(
+                        "arguments[0].click();", localizador)
                     print(u"Se hizo click en: " + locator)
                     return True
 
@@ -502,8 +565,8 @@ class Functions(Inicializar):
 
     ##############   -=_Wait Elements_=-   #############################
     ##########################################################################
-    def esperar(self, timeLoad = 8):
-        print ("Esperar: Inicia ("+str(timeLoad)+")")
+    def esperar(self, timeLoad=8):
+        print("Esperar: Inicia ("+str(timeLoad)+")")
         try:
             totalWait = 0
             while (totalWait < timeLoad):
@@ -511,24 +574,24 @@ class Functions(Inicializar):
                 time.sleep(1)
                 totalWait = totalWait + 1
         finally:
-            print ("Esperar: Carga Finalizada ... ")
+            print("Esperar: Carga Finalizada ... ")
 
 ##############   -Ventana de alertas   #############################
-    def alert_windows(self, accept ="accept"): 
+    def alert_windows(self, accept="accept"):
         try:
             wait = WebDriverWait(self.driver, 30)
             wait.until(EC.alert_is_present(), print("Esperando alerta..."))
 
             alert = self.driver.switch_to.alert
 
-            print (alert.text)
+            print(alert.text)
 
-            if accept.lower()== "accept":
+            if accept.lower() == "accept":
                 alert.accept()
-                print ("Click in Accept")
+                print("Click in Accept")
             else:
                 alert.dismiss()
-                print ("Click in Dismiss")
+                print("Click in Dismiss")
 
         except NoAlertPresentException:
             print('Alerta no presente')
@@ -536,7 +599,6 @@ class Functions(Inicializar):
             print('Alerta no presente')
         except TimeoutException:
             print('Alerta no presente')
-
 
     def check_element(self, locator):  # devuelve true o false
         Get_Entity = Functions.get_entity(self, locator)
@@ -547,41 +609,47 @@ class Functions(Inicializar):
             try:
                 if self.json_GetFieldBy.lower() == "id":
                     wait = WebDriverWait(self.driver, 20)
-                    wait.until(EC.visibility_of_element_located((By.ID, self.json_ValueToFind)))
+                    wait.until(EC.visibility_of_element_located(
+                        (By.ID, self.json_ValueToFind)))
                     print(u"check_element: Se visualizo el elemento " + locator)
                     return True
 
                 if self.json_GetFieldBy.lower() == "name":
                     wait = WebDriverWait(self.driver, 20)
-                    wait.until(EC.visibility_of_element_located((By.NAME, self.json_ValueToFind)))
+                    wait.until(EC.visibility_of_element_located(
+                        (By.NAME, self.json_ValueToFind)))
                     print(u"check_element: Se visualizo el elemento " + locator)
                     return True
 
                 if self.json_GetFieldBy.lower() == "xpath":
                     wait = WebDriverWait(self.driver, 20)
-                    wait.until(EC.visibility_of_element_located((By.XPATH, self.json_ValueToFind)))
+                    wait.until(EC.visibility_of_element_located(
+                        (By.XPATH, self.json_ValueToFind)))
                     print(u"check_element: Se visualizo el elemento " + locator)
                     return True
 
                 if self.json_GetFieldBy.lower() == "link":
                     wait = WebDriverWait(self.driver, 20)
-                    wait.until(EC.visibility_of_element_located((By.LINK, self.json_ValueToFind)))
+                    wait.until(EC.visibility_of_element_located(
+                        (By.LINK, self.json_ValueToFind)))
                     print(u"check_element: Se visualizo el elemento " + locator)
                     return True
 
                 if self.json_GetFieldBy.lower() == "css":
                     wait = WebDriverWait(self.driver, 20)
-                    wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, self.json_ValueToFind)))
+                    wait.until(EC.visibility_of_element_located(
+                        (By.CSS_SELECTOR, self.json_ValueToFind)))
                     print(u"check_element: Se visualizo el elemento " + locator)
                     return True
 
             except NoSuchElementException:
-                print("get_text: No se encontró el elemento: " + self.json_ValueToFind)
+                print("get_text: No se encontró el elemento: " +
+                      self.json_ValueToFind)
                 return False
             except TimeoutException:
-                print("get_text: No se encontró el elemento: " + self.json_ValueToFind)
+                print("get_text: No se encontró el elemento: " +
+                      self.json_ValueToFind)
                 return False
-
 
     def assert_text(self, locator, TEXTO):
 
@@ -592,30 +660,41 @@ class Functions(Inicializar):
         else:
             if self.json_GetFieldBy.lower() == "id":
                 wait = WebDriverWait(self.driver, 15)
-                wait.until(EC.presence_of_element_located((By.ID, self.json_ValueToFind)))
-                ObjText = self.driver.find_element_by_id(self.json_ValueToFind).text
+                wait.until(EC.presence_of_element_located(
+                    (By.ID, self.json_ValueToFind)))
+                ObjText = self.driver.find_element_by_id(
+                    self.json_ValueToFind).text
 
             if self.json_GetFieldBy.lower() == "name":
                 wait = WebDriverWait(self.driver, 15)
-                wait.until(EC.presence_of_element_located((By.NAME, self.json_ValueToFind)))
-                ObjText = self.driver.find_element_by_name(self.json_ValueToFind).text
+                wait.until(EC.presence_of_element_located(
+                    (By.NAME, self.json_ValueToFind)))
+                ObjText = self.driver.find_element_by_name(
+                    self.json_ValueToFind).text
 
             if self.json_GetFieldBy.lower() == "xpath":
                 wait = WebDriverWait(self.driver, 15)
-                wait.until(EC.presence_of_element_located((By.XPATH, self.json_ValueToFind)))
-                ObjText = self.driver.find_element_by_xpath(self.json_ValueToFind).text
+                wait.until(EC.presence_of_element_located(
+                    (By.XPATH, self.json_ValueToFind)))
+                ObjText = self.driver.find_element_by_xpath(
+                    self.json_ValueToFind).text
 
             if self.json_GetFieldBy.lower() == "link":
                 wait = WebDriverWait(self.driver, 15)
-                wait.until(EC.presence_of_element_located((By.PARTIAL_LINK_TEXT, self.json_ValueToFind)))
-                ObjText = self.driver.find_element_by_partial_link_text(self.json_ValueToFind).text
+                wait.until(EC.presence_of_element_located(
+                    (By.PARTIAL_LINK_TEXT, self.json_ValueToFind)))
+                ObjText = self.driver.find_element_by_partial_link_text(
+                    self.json_ValueToFind).text
 
             if self.json_GetFieldBy.lower() == "css":
                 wait = WebDriverWait(self.driver, 15)
-                wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, self.json_ValueToFind)))
-                ObjText = self.driver.find_element_by_css_selector(self.json_ValueToFind).text
+                wait.until(EC.presence_of_element_located(
+                    (By.CSS_SELECTOR, self.json_ValueToFind)))
+                ObjText = self.driver.find_element_by_css_selector(
+                    self.json_ValueToFind).text
 
-        print("Verificar Texto: el valor mostrado en: " + locator + " es: " + ObjText + " el esperado es: " + TEXTO)
+        print("Verificar Texto: el valor mostrado en: " + locator +
+              " es: " + ObjText + " el esperado es: " + TEXTO)
         assert TEXTO == ObjText, "Los valores comparados no coinciden"
 
     ##########################################################################
@@ -625,12 +704,12 @@ class Functions(Inicializar):
     def create_variable_scenary(self, key, value):
         Scenario[key] = value
         print(Scenario)
-        print ("Se almaceno la key " + key + " : " + value)
+        print("Se almaceno la key " + key + " : " + value)
 
     def save_variable_scenary(self, element, variable):
         Scenario[variable] = Functions.get_text(self, element)
         print(Scenario)
-        print ("Se almaceno el valor " + variable + " : " + Scenario[variable])
+        print("Se almaceno el valor " + variable + " : " + Scenario[variable])
 
     def get_variable_scenary(self, variable):
         self.variable = Scenario[variable]
@@ -641,11 +720,12 @@ class Functions(Inicializar):
         variable_scenary = str(Scenario[variable])
         element_text = str(Functions.get_text(self, element))
         _exist = (variable_scenary in element_text)
-        print (_exist)
-        print (f'Comparando los valores... verificando que si {variable_scenary} esta presente en {element_text} : {_exist}')
+        print(_exist)
+        print(
+            f'Comparando los valores... verificando que si {variable_scenary} esta presente en {element_text} : {_exist}')
         assert _exist == True, f'{variable_scenary} != {element_text}'
 
-    def textDateEnvironmentReplace(self, text): # funcion para restar dias
+    def textDateEnvironmentReplace(self, text):  # funcion para restar dias
         if text == 'today':
             self.today = datetime.date.today()
             text = self.today.strftime(Inicializar.DateFormat)
@@ -678,14 +758,15 @@ class Functions(Inicializar):
         wb.save(Inicializar.Excel)
         print(u"------------------------------------")
         print(u"El libro de excel utilizado es de es: " + Inicializar.Excel)
-        print(u"Se escribio en la celda " + str(celda) + u" el valor: " + str(valor))
+        print(u"Se escribio en la celda " +
+              str(celda) + u" el valor: " + str(valor))
         print(u"------------------------------------")
 
 
-########## ########## ##########  Database ########## ########## ##########
+########## ########## ##########  BASER DATOS ########## ########## ##########
 
-    def pyodbc_conn(self, _host = Inicializar.DB_HOST, _port = Inicializar.DB_PORT, _dbname=Inicializar.DB_DATABASE, _user = Inicializar.DB_USER, _pass = Inicializar.DB_PASS):
-        #print(pyodbc.drivers())
+    def pyodbc_conn(self, _host=Inicializar.DB_HOST, _port=Inicializar.DB_PORT, _dbname=Inicializar.DB_DATABASE, _user=Inicializar.DB_USER, _pass=Inicializar.DB_PASS):
+        # print(pyodbc.drivers())
         try:
             config = dict(
                 server=_host,
@@ -695,17 +776,16 @@ class Functions(Inicializar):
                 password=_pass)
 
             conn_str = (
-                    'SERVER={server};'
-                    'PORT={port};' +
-                    'DATABASE={database};' +
-                    'UID={username};' +
-                    'PWD={password}')
+                'SERVER={server};'
+                'PORT={port};' +
+                'DATABASE={database};' +
+                'UID={username};' +
+                'PWD={password}')
 
             conn = pyodbc.connect(
-                r'DRIVER={ODBC Driver 17 for SQL Server};' + 
+                r'DRIVER={ODBC Driver 17 for SQL Server};' +
                 conn_str.format(**config))
-                # r'DRIVER={PostgreSQL ANSI};' +
-                
+            # r'DRIVER={PostgreSQL ANSI};' +
 
             self.cursor = conn.cursor()
             print("Always Connected")
@@ -715,15 +795,15 @@ class Functions(Inicializar):
             self.cursor = None
             pytest.skip("Error en connection strings: " + str(error))
 
-    def pymysql_conn(self, _host = Inicializar.DB_HOST, _dbname=Inicializar.DB_DATABASE, _user = Inicializar.DB_USER, _pass = Inicializar.DB_PASS):
-        #print(pyodbc.drivers())
+    def pymysql_conn(self, _host=Inicializar.DB_HOST, _dbname=Inicializar.DB_DATABASE, _user=Inicializar.DB_USER, _pass=Inicializar.DB_PASS):
+        # print(pyodbc.drivers())
         try:
             self.connection = pymysql.connect(
                 host=_host,
                 db=_dbname,
                 user=_user,
-                password=_pass)           
-     
+                password=_pass)
+
             self.cursor = self.connection.cursor()
             print("Coneccion exitosa")
             return self.cursor
@@ -732,11 +812,10 @@ class Functions(Inicializar):
             self.cursor = None
             pytest.skip("Error en connection strings: " + str(error))
 
-
     def pyodbc_query(self, _query):
         # self.cursor = Functions.pyodbc_conn(self)
         self.cursor = Functions.pymysql_conn(self)
-        
+
         if self.cursor is not None:
             try:
                 self.cursor.execute(_query)
@@ -764,7 +843,7 @@ class Functions(Inicializar):
         dia = time.strftime("%d-%m-%Y")  # formato aaaa/mm/dd
         GeneralPath = Inicializar.Path_Evidencias
         DriverTest = Inicializar.NAVEGADOR
-        TestCase = self.__class__.__name__ # Saca el nombre a la clase
+        TestCase = self.__class__.__name__  # Saca el nombre a la clase
         horaAct = horaGlobal
         x = re.search("Context", TestCase)
         if (x):
@@ -784,8 +863,5 @@ class Functions(Inicializar):
         return img
 
     def captura(self, Descripcion):
-        allure.attach(self.driver.get_screenshot_as_png(), 
-        Descripcion, attachment_type=allure.attachment_type.PNG)
-
-
-   
+        allure.attach(self.driver.get_screenshot_as_png(),
+                      Descripcion, attachment_type=allure.attachment_type.PNG)

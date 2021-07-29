@@ -2,7 +2,7 @@ import os
 
 class Inicializar():
 # Directorio Base
-    basedir = os.path.abspath(os.path.join(__file__, "../.."))# sube 2 carpetas
+    basedir = os.path.abspath(os.path.join(__file__, "../.."))# sube 2 carpetas y guarda la ruta de 'src'
     DateFormat = '%d/%m/%Y'
     HourFormat = "%H%M%S"
 
@@ -14,8 +14,8 @@ class Inicializar():
     Environment = 'Dev'
 
     # BROWSER DE PRUEBAS
-    # NAVEGADOR = u'IExplorer'
     NAVEGADOR = u'CHROME'
+    # NAVEGADOR = u'IExplorer'
     # NAVEGADOR = u'FIREFOX'
 
 
@@ -39,3 +39,10 @@ class Inicializar():
 
     if Environment == 'Test':
         URL = 'https://www.despegar.com.ar/'
+        User = 'mdiaz'
+        Pass = 'Mm121666'
+        DB_HOST = '127.0.0.1'
+        DB_PORT = '3306'
+        DB_DATABASE = 'djangochannels'
+        DB_USER = 'djruber'
+        DB_PASS = 'Ericsson2018@'
