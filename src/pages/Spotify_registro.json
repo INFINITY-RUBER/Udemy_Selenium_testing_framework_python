@@ -6,12 +6,12 @@
 
   "Titulo": {
     "GetFieldBy": "Xpath",
-    "ValueToFind": "//h2[contains(text(),'Registrarte con tu correo electrónico')]"
+    "ValueToFind": "/html[1]/body[1]/div[1]/main[1]/div[2]/div[1]/form[1]/h2[1]"
   },
 
   "Already": {
     "GetFieldBy": "Xpath",
-    "ValueToFind": "//body/div[@id='__next']/main[1]/div[2]/form[1]/div[9]/p[3]/span[1]"
+    "ValueToFind": "/html[1]/body[1]/div[1]/main[1]/div[2]/div[1]/form[1]/div[9]/p[3]"
   },
 
   "Email": {
@@ -33,10 +33,18 @@
     "GetFieldBy": "id",
     "ValueToFind": "password"
   },
+  "Dia":{
+    "GetFieldBy": "Xpath",
+    "ValueToFind": "//*[@id='day']"
+  },
 
   "Mes de nacimiento": {
     "GetFieldBy": "Xpath",
     "ValueToFind": "//select[@id='month']"
+  },
+  "Año": {
+    "GetFieldBy": "Xpath",
+    "ValueToFind": "//*[@id='year']"
   },
 
   "Email Error": {

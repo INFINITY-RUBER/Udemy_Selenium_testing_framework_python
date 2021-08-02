@@ -38,7 +38,7 @@ class test_005(Selenium, unittest.TestCase):
 
         Selenium.get_elements(self, 'Frame3 input').click()
 
-        # get_select_elements
+        
         time.sleep(2)
         
 

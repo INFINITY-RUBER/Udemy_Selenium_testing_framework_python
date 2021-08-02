@@ -3,7 +3,7 @@ para validar si sale el elemento True o False
 '''
 import os
 import sys
-sys.path.append("/home/infinity/Documentos/Selenium_testing_framework_python")
+sys.path.append(os.path.abspath(os.path.join(__file__, "../../..")))
 #****** para que agrege la ruta de tu proyecto y encuentre src ***************
 # sys.path.insert( '~/Documentos/Selenium_testing_framework_python')
 from src.functions.Functions import Functions as Selenium
