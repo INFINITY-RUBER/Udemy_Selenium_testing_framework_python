@@ -1,6 +1,6 @@
 import allure
 import pymysql
-import pyodbc
+# import pyodbc
 import openpyxl
 import re
 import datetime
@@ -16,16 +16,18 @@ from selenium.common.exceptions import NoSuchElementException, NoAlertPresentExc
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
+
 from selenium.webdriver.chrome.options import Options as OpcionesChrome
 from selenium import webdriver
 from src.functions.Inicializar import Inicializar
 import os
 import sys
 # sys.path.append("/home/infinity/Documentos/Selenium_testing_framework_python")
-
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.firefox import GeckoDriverManager
 Scenario = {}
-diaGlobal = time.strftime(Inicializar.DateFormat)  # formato aaaa/mm/dd
-horaGlobal = time.strftime(Inicializar.HourFormat)  # formato 24 houras
+diaGlobal = time.strftime("%Y-%m-%d")  # formato aaaa/mm/dd
+horaGlobal = time.strftime("%H%M%S")  # formato 24 houras
 
 
 class Functions(Inicializar):
@@ -58,9 +60,11 @@ class Functions(Inicializar):
             options = OpcionesChrome()
             # hace que las opciones este maximizado
             options.add_argument('start-maximized')
-            # self.driver = webdriver.Chrome(chrome_options=options, executable_path=Inicializar.basedir + "\\drivers\\chromedriver.exe") PARA WINDOWS
+            # self.driver = webdriver.Chrome(chrome_options=options, 
+            #   executable_path=Inicializar.basedir + "\\drivers\\chromedriver.exe") PARA WINDOWS
+            #   executable_path=Inicializar.basedir + "/drivers/geckodriver") # en linux
             self.driver = webdriver.Chrome(
-                options=options, executable_path=Inicializar.basedir + "/drivers/chromedriver")  # en linux
+                options=options, executable_path=ChromeDriverManager().install())  
             self.driver.implicitly_wait(10)
             self.driver.get(URL)
             self.ventanas = {'Principal': self.driver.window_handles[0]}
@@ -68,7 +72,7 @@ class Functions(Inicializar):
 
         if navegador == ("FIREFOX"):
             self.driver = webdriver.Firefox(
-                executable_path=Inicializar.basedir + "/drivers/geckodriver")  # en linux
+                executable_path=GeckoDriverManager().install()) 
             # self.driver = webdriver.Firefox() windows
             self.driver.implicitly_wait(10)
             self.driver.maximize_window()

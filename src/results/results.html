@@ -429,7 +429,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
 }
 </script>
     <h1>results.html</h1>
-    <p>Report generated on 03-Aug-2021 at 11:36:18 by <a href="https://pypi.python.org/pypi/pytest-html">pytest-html</a> v3.1.1</p>
+    <p>Report generated on 05-Aug-2021 at 16:38:23 by <a href="https://pypi.python.org/pypi/pytest-html">pytest-html</a> v3.1.1</p>
     <h2>Environment</h2>
     <table id="environment">
       <tr>
@@ -445,8 +445,8 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <td>Python</td>
         <td>3.8.10</td></tr></table>
     <h2>Summary</h2>
-    <p>3 tests ran in 58.62 seconds. </p>
-    <p class="filter" hidden="true">(Un)check the boxes to filter the results.</p><input checked="true" class="filter" data-test-result="passed" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="passed">3 passed</span>, <input checked="true" class="filter" data-test-result="skipped" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="skipped">0 skipped</span>, <input checked="true" class="filter" data-test-result="failed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="failed">0 failed</span>, <input checked="true" class="filter" data-test-result="error" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="error">0 errors</span>, <input checked="true" class="filter" data-test-result="xfailed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xfailed">0 expected failures</span>, <input checked="true" class="filter" data-test-result="xpassed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xpassed">0 unexpected passes</span>
+    <p>3 tests ran in 0.71 seconds. </p>
+    <p class="filter" hidden="true">(Un)check the boxes to filter the results.</p><input checked="true" class="filter" data-test-result="passed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="passed">0 passed</span>, <input checked="true" class="filter" data-test-result="skipped" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="skipped">0 skipped</span>, <input checked="true" class="filter" data-test-result="failed" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="failed">3 failed</span>, <input checked="true" class="filter" data-test-result="error" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="error">0 errors</span>, <input checked="true" class="filter" data-test-result="xfailed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xfailed">0 expected failures</span>, <input checked="true" class="filter" data-test-result="xpassed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xpassed">0 unexpected passes</span>
     <h2>Results</h2>
     <table id="results-table">
       <thead id="results-table-head">
@@ -457,15 +457,15 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
           <th class="sortable links" col="links">Links</th></tr>
         <tr hidden="true" id="not-found-message">
           <th colspan="4">No results found. Try to check the filters</th></tr></thead>
-      <tbody class="passed results-table-row">
+      <tbody class="failed results-table-row">
         <tr>
-          <td class="col-result">Passed</td>
+          <td class="col-result">Failed</td>
           <td class="col-name">tst_011.py::test_010::test_010</td>
-          <td class="col-duration">16.80</td>
+          <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
-            <div class="log"> ------------------------------Captured stdout call------------------------------ <br/>Directorio Base: /home/infinity/Documentos/Selenium_testing_framework_python/src 
+            <div class="log">self = &lt;src.tests.tst_011.test_010 testMethod=test_010&gt;<br/><br/>    def setUp(self):<br/>&gt;       Selenium.abrir_navegador(self, URL=&#x27;https://www.spotify.com/py/signup/&#x27;)<br/><br/>tst_011.py:18: <br/>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ <br/><br/>self = &lt;src.tests.tst_011.test_010 testMethod=test_010&gt;, URL = &#x27;https://www.spotify.com/py/signup/&#x27;<br/>navegador = &#x27;CHROME&#x27;<br/><br/>    def abrir_navegador(self, URL=Inicializar.URL, navegador=Inicializar.NAVEGADOR):<br/>        print(&quot;Directorio Base: &quot; + Inicializar.basedir, &#x27;\n&#x27;)<br/>        self.ventanas = {}<br/>        print(&quot;-&quot;*20, &#x27;\n&#x27;)<br/>        print(navegador, &#x27;\n&#x27;)<br/>        print(&quot;-&quot;*20, &#x27;\n&#x27;)<br/>    <br/>        if navegador == (&quot;IExplorer&quot;):<br/>            caps = DesiredCapabilities.INTERNETEXPLORER.copy()  # config de interne exp<br/>            caps[&quot;platform&quot;] = &quot;WINDOWS&quot;<br/>            caps[&quot;browserName&quot;] = &quot;internet explorer&quot;<br/>            caps[&quot;ignoreZoomSetting&quot;] = True<br/>            caps[&quot;requireWindowFocus&quot;] = True<br/>            caps[&quot;nativeEvents&quot;] = True<br/>            self.driver = webdriver.Ie(<br/>                Inicializar.basedir + &quot;\\drivers\\IEDriverServer.exe&quot;, caps)<br/>            self.driver.implicitly_wait(10)<br/>            self.driver.maximize_window()<br/>            self.driver.get(URL)<br/>            self.ventanas = {&#x27;Principal&#x27;: self.driver.window_handles[0]}<br/>            print(&quot;IExplorer: &quot;, self.ventanas, &#x27;\n&#x27;)<br/>            return self.driver<br/>    <br/>        if navegador == (&quot;CHROME&quot;):<br/>            options = OpcionesChrome()<br/>            # hace que las opciones este maximizado<br/>            options.add_argument(&#x27;start-maximized&#x27;)<br/>            # self.driver = webdriver.Chrome(chrome_options=options, executable_path=Inicializar.basedir + &quot;\\drivers\\chromedriver.exe&quot;) PARA WINDOWS<br/>            self.driver = webdriver.Chrome(<br/>&gt;               options=options, executable_path=ChromedriverManager().install())  # en linux<br/><span class="error">E           NameError: name &#x27;ChromedriverManager&#x27; is not defined</span><br/><br/>../functions/Functions.py:65: NameError<br/> ------------------------------Captured stdout call------------------------------ <br/>Directorio Base: /home/infinity/Documentos/Selenium_testing_framework_python/src 
 
 -------------------- 
 
@@ -473,182 +473,38 @@ CHROME
 
 -------------------- 
 
-get_json_file: /home/infinity/Documentos/Selenium_testing_framework_python/src/pages/Spotify_registro.json 
-
-//input[@id=&#x27;email&#x27;] ---;--  Xpath
-get_elements: //input[@id=&#x27;email&#x27;] 
-) 
-
-//input[@id=&#x27;email&#x27;] ---;--  Xpath
-get_elements: //input[@id=&#x27;email&#x27;] 
-) 
-
-//span[contains(text(),&#x27;Este correo electrónico no es válido. Asegúrate de&#x27;)] ---;--  Xpath
-check_element: Se visualizo el elemento Email Error 
-
-//input[@id=&#x27;email&#x27;] ---;--  Xpath
-get_elements: //input[@id=&#x27;email&#x27;] 
-) 
-
-//input[@id=&#x27;email&#x27;] ---;--  Xpath
-get_elements: //input[@id=&#x27;email&#x27;] 
-) 
-
-//input[@id=&#x27;email&#x27;] ---;--  Xpath
-get_elements: //input[@id=&#x27;email&#x27;] 
-) 
-
-Se corrigio Error 
-Se cerrará  el DRIVER 
-
 <br/></div></td></tr></tbody>
-      <tbody class="passed results-table-row">
+      <tbody class="failed results-table-row">
         <tr>
-          <td class="col-result">Passed</td>
+          <td class="col-result">Failed</td>
           <td class="col-name">tst_012.py::test_012::test_012</td>
-          <td class="col-duration">28.75</td>
+          <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
-            <div class="log"> ------------------------------Captured stdout call------------------------------ <br/>Directorio Base: /home/infinity/Documentos/Selenium_testing_framework_python/src 
+            <div class="log">self = &lt;src.tests.tst_012.test_012 testMethod=test_012&gt;<br/><br/>    def setUp(self):<br/>&gt;       Selenium.abrir_navegador(self)<br/><br/>tst_012.py:19: <br/>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ <br/><br/>self = &lt;src.tests.tst_012.test_012 testMethod=test_012&gt;, URL = &#x27;https://www.spotify.com/py/signup/&#x27;<br/>navegador = &#x27;CHROME&#x27;<br/><br/>    def abrir_navegador(self, URL=Inicializar.URL, navegador=Inicializar.NAVEGADOR):<br/>        print(&quot;Directorio Base: &quot; + Inicializar.basedir, &#x27;\n&#x27;)<br/>        self.ventanas = {}<br/>        print(&quot;-&quot;*20, &#x27;\n&#x27;)<br/>        print(navegador, &#x27;\n&#x27;)<br/>        print(&quot;-&quot;*20, &#x27;\n&#x27;)<br/>    <br/>        if navegador == (&quot;IExplorer&quot;):<br/>            caps = DesiredCapabilities.INTERNETEXPLORER.copy()  # config de interne exp<br/>            caps[&quot;platform&quot;] = &quot;WINDOWS&quot;<br/>            caps[&quot;browserName&quot;] = &quot;internet explorer&quot;<br/>            caps[&quot;ignoreZoomSetting&quot;] = True<br/>            caps[&quot;requireWindowFocus&quot;] = True<br/>            caps[&quot;nativeEvents&quot;] = True<br/>            self.driver = webdriver.Ie(<br/>                Inicializar.basedir + &quot;\\drivers\\IEDriverServer.exe&quot;, caps)<br/>            self.driver.implicitly_wait(10)<br/>            self.driver.maximize_window()<br/>            self.driver.get(URL)<br/>            self.ventanas = {&#x27;Principal&#x27;: self.driver.window_handles[0]}<br/>            print(&quot;IExplorer: &quot;, self.ventanas, &#x27;\n&#x27;)<br/>            return self.driver<br/>    <br/>        if navegador == (&quot;CHROME&quot;):<br/>            options = OpcionesChrome()<br/>            # hace que las opciones este maximizado<br/>            options.add_argument(&#x27;start-maximized&#x27;)<br/>            # self.driver = webdriver.Chrome(chrome_options=options, executable_path=Inicializar.basedir + &quot;\\drivers\\chromedriver.exe&quot;) PARA WINDOWS<br/>            self.driver = webdriver.Chrome(<br/>&gt;               options=options, executable_path=ChromedriverManager().install())  # en linux<br/><span class="error">E           NameError: name &#x27;ChromedriverManager&#x27; is not defined</span><br/><br/>../functions/Functions.py:65: NameError<br/> ------------------------------Captured stdout call------------------------------ <br/>Directorio Base: /home/infinity/Documentos/Selenium_testing_framework_python/src 
 
 -------------------- 
 
 CHROME 
 
 -------------------- 
-
-get_json_file: /home/infinity/Documentos/Selenium_testing_framework_python/src/pages/Spotify_registro.json 
-
-/html[1]/body[1]/div[1]/main[1]/div[2]/div[1]/form[1]/div[9]/p[3] ---;--  Xpath
-get_text: /html[1]/body[1]/div[1]/main[1]/div[2]/div[1]/form[1]/div[9]/p[3] 
-
-Text Value : ¿Ya tienes cuenta? Inicia sesión. 
-
-{&#x27;already&#x27;: &#x27;¿Ya tienes cuenta? Inicia sesión.&#x27;}
-Se almaceno el valor already : ¿Ya tienes cuenta? Inicia sesión.
-/html[1]/body[1]/div[1]/main[1]/div[2]/div[1]/form[1]/h2[1] ---;--  Xpath
-get_text: /html[1]/body[1]/div[1]/main[1]/div[2]/div[1]/form[1]/h2[1] 
-
-Text Value : Registrarte con tu correo electrónico 
-
-{&#x27;already&#x27;: &#x27;¿Ya tienes cuenta? Inicia sesión.&#x27;, &#x27;titulo&#x27;: &#x27;Registrarte con tu correo electrónico&#x27;}
-Se almaceno el valor titulo : Registrarte con tu correo electrónico
-get_json_file: /home/infinity/Documentos/Selenium_testing_framework_python/src/pages/Google.json 
-
-{&#x27;Principal&#x27;: &#x27;CDwindow-B4CBFBA77B4B8C5C1A1B7E7927B8BAE9&#x27;, &#x27;google&#x27;: &#x27;CDwindow-58EF3E5AFE15658AB3D26D5D8539BA11&#x27;}
-Estas en google : CDwindow-58EF3E5AFE15658AB3D26D5D8539BA11 
-
-get_variable_scenary: Registrarte con tu correo electrónico 
-
-//input[@name=&#x27;q&#x27;] ---;--  Xpath
-get_elements: //input[@name=&#x27;q&#x27;] 
-) 
-
-//input[@name=&#x27;q&#x27;] ---;--  Xpath
-get_elements: //input[@name=&#x27;q&#x27;] 
-) 
-
-Esperar: Inicia (3) 
-
-Esperar: Carga Finalizada ...  
-
-{&#x27;Principal&#x27;: &#x27;CDwindow-B4CBFBA77B4B8C5C1A1B7E7927B8BAE9&#x27;, &#x27;google&#x27;: &#x27;CDwindow-58EF3E5AFE15658AB3D26D5D8539BA11&#x27;, &#x27;google_2&#x27;: &#x27;CDwindow-FB9AEB374D18F0EF54C8C3F28159C734&#x27;}
-Estas en google_2 : CDwindow-FB9AEB374D18F0EF54C8C3F28159C734 
-
-get_variable_scenary: ¿Ya tienes cuenta? Inicia sesión. 
-
-//input[@name=&#x27;q&#x27;] ---;--  Xpath
-get_elements: //input[@name=&#x27;q&#x27;] 
-) 
-
-//input[@name=&#x27;q&#x27;] ---;--  Xpath
-get_elements: //input[@name=&#x27;q&#x27;] 
-) 
-
-//input[@name=&#x27;q&#x27;] ---;--  Xpath
-get_elements: //input[@name=&#x27;q&#x27;] 
-) 
-
-Esperar: Inicia (3) 
-
-Esperar: Carga Finalizada ...  
-
-Se cerrará  el DRIVER 
 
 <br/></div></td></tr></tbody>
-      <tbody class="passed results-table-row">
+      <tbody class="failed results-table-row">
         <tr>
-          <td class="col-result">Passed</td>
+          <td class="col-result">Failed</td>
           <td class="col-name">tst_013.py::test_013::test_013</td>
-          <td class="col-duration">12.13</td>
+          <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
-            <div class="log"> ------------------------------Captured stdout call------------------------------ <br/>Directorio Base: /home/infinity/Documentos/Selenium_testing_framework_python/src 
+            <div class="log">self = &lt;src.tests.tst_013.test_013 testMethod=test_013&gt;<br/><br/>    def setUp(self):<br/>&gt;       Selenium.abrir_navegador(self)<br/><br/>tst_013.py:18: <br/>_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ <br/><br/>self = &lt;src.tests.tst_013.test_013 testMethod=test_013&gt;, URL = &#x27;https://www.spotify.com/py/signup/&#x27;<br/>navegador = &#x27;CHROME&#x27;<br/><br/>    def abrir_navegador(self, URL=Inicializar.URL, navegador=Inicializar.NAVEGADOR):<br/>        print(&quot;Directorio Base: &quot; + Inicializar.basedir, &#x27;\n&#x27;)<br/>        self.ventanas = {}<br/>        print(&quot;-&quot;*20, &#x27;\n&#x27;)<br/>        print(navegador, &#x27;\n&#x27;)<br/>        print(&quot;-&quot;*20, &#x27;\n&#x27;)<br/>    <br/>        if navegador == (&quot;IExplorer&quot;):<br/>            caps = DesiredCapabilities.INTERNETEXPLORER.copy()  # config de interne exp<br/>            caps[&quot;platform&quot;] = &quot;WINDOWS&quot;<br/>            caps[&quot;browserName&quot;] = &quot;internet explorer&quot;<br/>            caps[&quot;ignoreZoomSetting&quot;] = True<br/>            caps[&quot;requireWindowFocus&quot;] = True<br/>            caps[&quot;nativeEvents&quot;] = True<br/>            self.driver = webdriver.Ie(<br/>                Inicializar.basedir + &quot;\\drivers\\IEDriverServer.exe&quot;, caps)<br/>            self.driver.implicitly_wait(10)<br/>            self.driver.maximize_window()<br/>            self.driver.get(URL)<br/>            self.ventanas = {&#x27;Principal&#x27;: self.driver.window_handles[0]}<br/>            print(&quot;IExplorer: &quot;, self.ventanas, &#x27;\n&#x27;)<br/>            return self.driver<br/>    <br/>        if navegador == (&quot;CHROME&quot;):<br/>            options = OpcionesChrome()<br/>            # hace que las opciones este maximizado<br/>            options.add_argument(&#x27;start-maximized&#x27;)<br/>            # self.driver = webdriver.Chrome(chrome_options=options, executable_path=Inicializar.basedir + &quot;\\drivers\\chromedriver.exe&quot;) PARA WINDOWS<br/>            self.driver = webdriver.Chrome(<br/>&gt;               options=options, executable_path=ChromedriverManager().install())  # en linux<br/><span class="error">E           NameError: name &#x27;ChromedriverManager&#x27; is not defined</span><br/><br/>../functions/Functions.py:65: NameError<br/> ------------------------------Captured stdout call------------------------------ <br/>Directorio Base: /home/infinity/Documentos/Selenium_testing_framework_python/src 
 
 -------------------- 
 
 CHROME 
 
 -------------------- 
-
-get_json_file: /home/infinity/Documentos/Selenium_testing_framework_python/src/pages/Spotify_registro.json 
-
-/html[1]/body[1]/div[1]/main[1]/div[2]/div[1]/form[1]/div[9]/p[3] ---;--  Xpath
-get_text: /html[1]/body[1]/div[1]/main[1]/div[2]/div[1]/form[1]/div[9]/p[3] 
-
-Text Value : ¿Ya tienes cuenta? Inicia sesión. 
-
-{&#x27;already&#x27;: &#x27;¿Ya tienes cuenta? Inicia sesión.&#x27;, &#x27;titulo&#x27;: &#x27;Registrarte con tu correo electrónico&#x27;, &#x27;Ya tengo&#x27;: &#x27;¿Ya tienes cuenta? Inicia sesión.&#x27;}
-Se almaceno el valor Ya tengo : ¿Ya tienes cuenta? Inicia sesión.
-{&#x27;Principal&#x27;: &#x27;CDwindow-CF660D9B40905ACA5C728F8DD9554CF1&#x27;, &#x27;Spoty Signup&#x27;: &#x27;CDwindow-3648CA50F030A524DF3BD50BC4D3300B&#x27;}
-Estas en Spoty Signup : CDwindow-3648CA50F030A524DF3BD50BC4D3300B 
-
-/html[1]/body[1]/div[1]/main[1]/div[2]/div[1]/form[1]/div[9]/p[3] ---;--  Xpath
-Esperar_Elemento: Se visualizo el elemento Already 
-
-/html[1]/body[1]/div[1]/main[1]/div[2]/div[1]/form[1]/div[9]/p[3] ---;--  Xpath
-get_text: /html[1]/body[1]/div[1]/main[1]/div[2]/div[1]/form[1]/div[9]/p[3] 
-
-Text Value : ¿Ya tienes cuenta? Inicia sesión. 
-
-True
-Comparando los valores... verificando que si ¿Ya tienes cuenta? Inicia sesión. esta presente en ¿Ya tienes cuenta? Inicia sesión. : True
-Esperar: Inicia (3) 
-
-Esperar: Carga Finalizada ...  
-
-------------------------------------
-El libro de excel utilizado es de es: /home/infinity/Documentos/Selenium_testing_framework_python/src/data/DataTest.xlsx
-El valor de la celda es: Mervin
------------------------------------- 
-
-------------------------------------
-El libro de excel utilizado es de es: /home/infinity/Documentos/Selenium_testing_framework_python/src/data/DataTest.xlsx
-El valor de la celda es: Diaz
------------------------------------- 
-
-------------------------------------
-El libro de excel utilizado es de es: /home/infinity/Documentos/Selenium_testing_framework_python/src/data/DataTest.xlsx
-El valor de la celda es: 95628547
------------------------------------- 
-
-{&#x27;already&#x27;: &#x27;¿Ya tienes cuenta? Inicia sesión.&#x27;, &#x27;titulo&#x27;: &#x27;Registrarte con tu correo electrónico&#x27;, &#x27;Ya tengo&#x27;: &#x27;¿Ya tienes cuenta? Inicia sesión.&#x27;, &#x27;NOMBRE&#x27;: &#x27;Mervin&#x27;}
-Se almaceno la key NOMBRE : Mervin 
-
-------------------------------------
-El libro de excel utilizado es de es: /home/infinity/Documentos/Selenium_testing_framework_python/src/data/DataTest.xlsx
-El valor de la celda es: Diaz
------------------------------------- 
-
-{&#x27;already&#x27;: &#x27;¿Ya tienes cuenta? Inicia sesión.&#x27;, &#x27;titulo&#x27;: &#x27;Registrarte con tu correo electrónico&#x27;, &#x27;Ya tengo&#x27;: &#x27;¿Ya tienes cuenta? Inicia sesión.&#x27;, &#x27;NOMBRE&#x27;: &#x27;Mervin&#x27;, &#x27;APELLIDO&#x27;: &#x27;Diaz&#x27;}
-Se almaceno la key APELLIDO : Diaz 
-
-{&#x27;already&#x27;: &#x27;¿Ya tienes cuenta? Inicia sesión.&#x27;, &#x27;titulo&#x27;: &#x27;Registrarte con tu correo electrónico&#x27;, &#x27;Ya tengo&#x27;: &#x27;¿Ya tienes cuenta? Inicia sesión.&#x27;, &#x27;NOMBRE&#x27;: &#x27;95628547&#x27;, &#x27;APELLIDO&#x27;: &#x27;Diaz&#x27;}
-Se almaceno la key NOMBRE : 95628547 
-
-Diaz
-Se cerrará  el DRIVER 
 
 <br/></div></td></tr></tbody></table></body></html>
