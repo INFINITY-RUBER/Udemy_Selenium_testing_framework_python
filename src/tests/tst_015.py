@@ -2,7 +2,7 @@
 '''
 import os
 import sys
-sys.path.append("/home/infinity/Documentos/Selenium_testing_framework_python")
+sys.path.append(os.path.abspath(os.path.join(__file__, "../../..")))
 from src.functions.Functions import Functions as Selenium
 import unittest
 
@@ -11,18 +11,18 @@ import unittest
 class test_015(Selenium, unittest.TestCase):
 
     def setUp(self):
-        self.CURSOR = Selenium.pyodbc_query(self, 'SELECT * FROM alert_alert;')
+        self.CURSOR = Selenium.pyodbc_query(self, 'SELECT * FROM alert_alert;')      
 
         Selenium.abrir_navegador(self, "https://www.google.com/")
         Selenium.get_json_file(self, "Google")
 
     def test_015(self):
-        print(self.CURSOR)
+        print('CURSOR:', self.CURSOR)
         date = Selenium.textDateEnvironmentReplace(self, "Last Month")
 
         Selenium.get_elements(self, "txt_busqueda").send_keys(date)
 
-        Selenium.crear_path(self) # crea la carpeta de pantallazo
+        # Selenium.crear_path(self) # crea la carpeta de pantallazo
 
         Selenium.esperar(self, 5) 
 

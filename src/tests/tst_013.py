@@ -1,9 +1,11 @@
-''' Funcion de copiado de texto de los elementos compare_with_variable_scenary
+''' 
+ EXTRAER DATOS DE EXCEL
+ Funcion de copiado de texto de los elementos compare_with_variable_scenary
 y se adiciona uso de excel llamados y variables de excenario
 '''
 import os
 import sys
-sys.path.append("/home/infinity/Documentos/Selenium_testing_framework_python")
+sys.path.append(os.path.abspath(os.path.join(__file__, "../../..")))
 #****** para que agrege la ruta de tu proyecto y encuentre src ***************
 # sys.path.insert( '~/Documentos/Selenium_testing_framework_python')
 from src.functions.Functions import Functions as Selenium
@@ -37,13 +39,8 @@ class test_013(Selenium, unittest.TestCase):
 
         Selenium.create_variable_scenary(self,'NOMBRE',NOMBRE)
         Selenium.create_variable_scenary(self,'APELLIDO', Selenium.leer_celda(self,'B1'))
-
-        
-
-
-        
-
-
+        Selenium.create_variable_scenary(self,'NOMBRE',DNI)
+        print(APELLIDO)
     def tearDown(self):
         Selenium.tearDown(self)
 

@@ -59,6 +59,6 @@
 
   "Mensaje Email": {
     "GetFieldBy": "Xpath",
-    "ValueToFind": "//body/div[@id='__next']/main[1]/div[2]/form[1]/div[1]/div[2]/span[1]"
+    "ValueToFind": "/html[1]/body[1]/div[1]/main[1]/div[2]/div[1]/form[1]/div[1]/div[2]"
   }
 }

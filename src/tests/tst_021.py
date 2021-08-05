@@ -29,7 +29,7 @@ class test_021(unittest.TestCase, Selenium):
         
         assert Captcha == True, "No se visualizo el captcha"
 
-        assert Mensaje_Email_texto == "Lo sentimos, este correo ya está registrado.", f"El mensaje esperado es: 'Lo sentimos, este correo ya está registrado.',  el mensaje obtenido fue: {Mensaje_Email_texto}"
+        assert Mensaje_Email_texto == "Este correo electrónico ya está conectado a una cuenta. Inicia sesión.", f"El mensaje esperado es: 'Este correo electrónico ya está conectado a una cuenta. Inicia sesión.',  el mensaje obtenido fue: {Mensaje_Email_texto}"
 
     def tearDown(self):
         Selenium.tearDown(self)

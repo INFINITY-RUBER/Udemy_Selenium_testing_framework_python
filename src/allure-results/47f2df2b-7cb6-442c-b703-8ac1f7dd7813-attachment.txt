@@ -1,0 +1,31 @@
+Coneccion exitosa 
+
+(1, 'hola buenos dias', datetime.datetime(2021, 1, 5, 5, 49), 1) 
+
+(2, 'hola soy ruber', datetime.datetime(2021, 1, 6, 5, 49), 2) 
+
+(3, 'hola soy claudia', datetime.datetime(2021, 1, 6, 5, 49), 2) 
+
+pyodbc Se cerró la conexion 
+
+Directorio Base: /home/infinity/Documentos/Selenium_testing_framework_python/src 
+
+-------------------- 
+
+CHROME 
+
+-------------------- 
+
+get_json_file: /home/infinity/Documentos/Selenium_testing_framework_python/src/pages/Google.json 
+
+((1, 'hola buenos dias', datetime.datetime(2021, 1, 5, 5, 49), 1), (2, 'hola soy ruber', datetime.datetime(2021, 1, 6, 5, 49), 2), (3, 'hola soy claudia', datetime.datetime(2021, 1, 6, 5, 49), 2))
+//input[@name='q'] ---;--  Xpath
+get_elements: //input[@name='q'] 
+) 
+
+Esperar: Inicia (5) 
+
+Esperar: Carga Finalizada ...  
+
+Se cerrará  el DRIVER 
+

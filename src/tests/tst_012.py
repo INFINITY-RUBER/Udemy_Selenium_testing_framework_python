@@ -34,8 +34,8 @@ class test_012(Selenium, unittest.TestCase):
         Selenium.esperar(self, 3)
 
         Selenium.new_window(self, 'https://www.google.com/')
-        Selenium.switch_to_windows_name(self, 'google_2') # cambio de pestaña
-
+        Selenium.switch_to_windows_name(self, 'google_2') # cambio de pestaña y la nombra google_2
+ 
         texto2 = Selenium.get_variable_scenary(self, 'already')
         Selenium.send_key_text(self,'txt_busqueda', texto2)
         Selenium.send_especific_keys(self, 'txt_busqueda','Enter')

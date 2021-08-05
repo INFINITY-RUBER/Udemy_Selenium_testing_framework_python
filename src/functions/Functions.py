@@ -60,7 +60,7 @@ class Functions(Inicializar):
             options.add_argument('start-maximized')
             # self.driver = webdriver.Chrome(chrome_options=options, executable_path=Inicializar.basedir + "\\drivers\\chromedriver.exe") PARA WINDOWS
             self.driver = webdriver.Chrome(
-                chrome_options=options, executable_path=Inicializar.basedir + "/drivers/chromedriver")  # en linux
+                options=options, executable_path=Inicializar.basedir + "/drivers/chromedriver")  # en linux
             self.driver.implicitly_wait(10)
             self.driver.get(URL)
             self.ventanas = {'Principal': self.driver.window_handles[0]}
@@ -351,6 +351,7 @@ class Functions(Inicializar):
         Get_Entity = Functions.get_entity(self, locator)
 
         TIME_OUT = 10
+        
 
         if Get_Entity is None:
             return print("No se encontro el valor en el Json definido", '\n')
@@ -745,9 +746,9 @@ class Functions(Inicializar):
         wb = openpyxl.load_workbook(Inicializar.Excel)
         sheet = wb["DataTest"]
         valor = str(sheet[celda].value)
-        print(u"------------------------------------", '\n')
-        print(u"El libro de excel utilizado es de es: " + Inicializar.Excel, '\n')
-        print(u"El valor de la celda es: " + valor, '\n')
+        print(u"------------------------------------")
+        print(u"El libro de excel utilizado es de es: " + Inicializar.Excel)
+        print(u"El valor de la celda es: " + valor)
         print(u"------------------------------------", '\n')
         return valor
 
@@ -756,9 +757,9 @@ class Functions(Inicializar):
         hoja = wb["DataTest"]
         hoja[celda] = valor
         wb.save(Inicializar.Excel)
-        print(u"------------------------------------", '\n')
-        print(u"El libro de excel utilizado es de es: " + Inicializar.Excel, '\n')
-        print(u"Se escribio en la celda " , '\n'+
+        print(u"------------------------------------")
+        print(u"El libro de excel utilizado es de es: " + Inicializar.Excel)
+        print(u"Se escribio en la celda " +
               str(celda) + u" el valor: " + str(valor))
         print(u"------------------------------------", '\n')
 
@@ -798,11 +799,14 @@ class Functions(Inicializar):
     def pymysql_conn(self, _host=Inicializar.DB_HOST, _dbname=Inicializar.DB_DATABASE, _user=Inicializar.DB_USER, _pass=Inicializar.DB_PASS):
         # print(pyodbc.drivers(), '\n')
         try:
-            self.connection = pymysql.connect(
+            self.connection = pymysql.connect(                
+
                 host=_host,
-                db=_dbname,
                 user=_user,
-                password=_pass)
+                password=_pass,
+                db=_dbname               
+                
+                )
 
             self.cursor = self.connection.cursor()
             print("Coneccion exitosa", '\n')
@@ -810,6 +814,7 @@ class Functions(Inicializar):
 
         except (pymysql.OperationalError) as error:
             self.cursor = None
+            print(" OperationalError", '\n')
             pytest.skip("Error en connection strings: " + str(error))
 
     def pyodbc_query(self, _query):
@@ -823,6 +828,7 @@ class Functions(Inicializar):
                 for row in self.Result:
                     print(f'{row[:]}', '\n')
                     # print(row, '\n')
+                return self.Result
 
             except (pymysql.Error) as error:
                 print("Error en la consulta", error, '\n')
@@ -831,6 +837,7 @@ class Functions(Inicializar):
                 if (self.cursor):
                     self.cursor.close()
                     print("pyodbc Se cerró la conexion", '\n')
+
 
 ##############   -=_CAPTURA DE PANTALLA_=-   #############################
 ##########################################################################
@@ -841,9 +848,9 @@ class Functions(Inicializar):
 
     def crear_path(self):
         dia = time.strftime("%d-%m-%Y")  # formato aaaa/mm/dd
-        GeneralPath = Inicializar.Path_Evidencias
+        GeneralPath = Inicializar.Path_Evidencias # ruta de las caturas
         DriverTest = Inicializar.NAVEGADOR
-        TestCase = self.__class__.__name__  # Saca el nombre a la clase
+        TestCase = self.__class__.__name__  # Saca el nombre a la clase que se esta ejecutando
         horaAct = horaGlobal
         x = re.search("Context", TestCase)
         if (x):
